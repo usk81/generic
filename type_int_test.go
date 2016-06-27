@@ -32,7 +32,7 @@ func TestTypeIntJsonUnmarshalAndMarshal(t *testing.T) {
 }
 
 func TestTypeIntJsonError(t *testing.T) {
-	var ts TestUintStruct
+	var ts TestIntStruct
 	jstr := `{"int":10,"float":1.0,"bool":true,"string":"あ","null_value":null}`
 	expected := `{"int":10,"float":1,"bool":1,"string":null,"null_value":null}`
 	err := json.Unmarshal([]byte(jstr), &ts)

@@ -16,7 +16,7 @@ type TestStringStruct struct {
 func TestTypeStringJsonUnmarshalAndMarshal(t *testing.T) {
 	var ts TestStringStruct
 	jstr := `{"int":10,"float":1.1,"bool":false,"string":"qwertyuiopkjhgv876","null_value":null}`
-	expected := `{"int":"10","float":"1.1000000000","bool":"false","string":"qwertyuiopkjhgv876","null_value":null}`
+	expected := `{"int":"10","float":"1.1","bool":"false","string":"qwertyuiopkjhgv876","null_value":null}`
 	err := json.Unmarshal([]byte(jstr), &ts)
 	if err != nil {
 		t.Errorf("Not Expected error when json.Unmarshal. error:%v", err.Error())
