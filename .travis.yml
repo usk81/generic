@@ -9,7 +9,7 @@ before_install:
     - go get github.com/mattn/goveralls
     - if ! go get github.com/golang/tools/cmd/cover; then go get golang.org/x/tools/cmd/cover; fi
 before_script:
-    - chmod +x travis_test.sh
+    - chmod +x travis.sh
 
 matrix:
   allow_failures:
