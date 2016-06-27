@@ -1,6 +1,7 @@
 package generic
 
 import (
+	"math"
 	"strconv"
 	"time"
 )
@@ -165,9 +166,21 @@ func asString(x interface{}) (result string, isValid ValidFlag, err error) {
 	case uint64:
 		result = strconv.FormatUint(x.(uint64), 10)
 	case float32:
-		result = strconv.FormatFloat(float64(x.(float32)), 'f', 10, 64)
+		f := float64(x.(float32))
+		fa := math.Abs(f)
+		if math.Ceil(fa) > fa {
+			result = strconv.FormatFloat(f, 'f', 10, 64)
+		} else {
+			result = strconv.FormatInt(int64(x.(float32)), 10)
+		}
 	case float64:
-		result = strconv.FormatFloat(x.(float64), 'f', 10, 64)
+		f := x.(float64)
+		fa := math.Abs(f)
+		if math.Ceil(fa) > fa {
+			result = strconv.FormatFloat(f, 'f', 10, 64)
+		} else {
+			result = strconv.FormatInt(int64(x.(float64)), 10)
+		}
 	case bool:
 		result = strconv.FormatBool(x.(bool))
 	case string:
