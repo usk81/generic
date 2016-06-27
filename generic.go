@@ -9,6 +9,7 @@ type GenericType interface {
 	Valid() bool
 	Value() interface{}
 	Scan(interface{}) error
+	Set(interface{}) error
 	Reset()
 }
 

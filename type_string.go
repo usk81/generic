@@ -23,6 +23,10 @@ func (v *TypeString) Scan(x interface{}) (err error) {
 	return
 }
 
+func (v *TypeString) Set(x interface{}) (err error) {
+	return v.Scan(x)
+}
+
 func (v TypeString) MarshalJSON() ([]byte, error) {
 	if !v.Valid() {
 		return json.Marshal(nil)

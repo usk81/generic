@@ -23,6 +23,10 @@ func (v *TypeUint) Scan(x interface{}) (err error) {
 	return
 }
 
+func (v *TypeUint) Set(x interface{}) (err error) {
+	return v.Scan(x)
+}
+
 func (v TypeUint) MarshalJSON() ([]byte, error) {
 	if !v.Valid() {
 		return json.Marshal(nil)

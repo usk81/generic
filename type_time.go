@@ -26,6 +26,10 @@ func (v *TypeTime) Scan(x interface{}) (err error) {
 	return
 }
 
+func (v *TypeTime) Set(x interface{}) (err error) {
+	return v.Scan(x)
+}
+
 func (v TypeTime) MarshalJSON() ([]byte, error) {
 	if !v.Valid() {
 		return json.Marshal(nil)
