@@ -2,6 +2,7 @@ package generic
 
 import "encoding/json"
 
+// TypeBool
 type TypeBool struct {
 	ValidFlag
 	Bool bool
@@ -14,6 +15,7 @@ func (v TypeBool) Value() interface{} {
 	return v.Bool
 }
 
+// Scan implements the sql.Scanner interface.
 func (v *TypeBool) Scan(x interface{}) (err error) {
 	v.Bool, v.ValidFlag, err = asBool(x)
 	if err != nil {
@@ -27,6 +29,7 @@ func (v *TypeBool) Set(x interface{}) (err error) {
 	return v.Scan(x)
 }
 
+// MarshalJSON implements the json.Marshaler interface.
 func (v TypeBool) MarshalJSON() ([]byte, error) {
 	if !v.Valid() {
 		return json.Marshal(nil)
@@ -34,6 +37,7 @@ func (v TypeBool) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.Bool)
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface.
 func (v *TypeBool) UnmarshalJSON(data []byte) error {
 	var in interface{}
 	if err := json.Unmarshal(data, &in); err != nil {

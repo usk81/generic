@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// asBool converts a specified value to boolean value.
 func asBool(x interface{}) (result bool, isValid ValidFlag, err error) {
 	switch x.(type) {
 	case nil:
@@ -48,6 +49,7 @@ func asBool(x interface{}) (result bool, isValid ValidFlag, err error) {
 	return result, true, nil
 }
 
+// asBool converts a specified value to float64 value.
 func asFloat(x interface{}) (result float64, isValid ValidFlag, err error) {
 	switch x.(type) {
 	case nil:
@@ -95,6 +97,7 @@ func asFloat(x interface{}) (result float64, isValid ValidFlag, err error) {
 	return result, true, nil
 }
 
+// asBool converts a specified value to int64 value.
 func asInt(x interface{}) (result int64, isValid ValidFlag, err error) {
 	switch x.(type) {
 	case nil:
@@ -141,6 +144,7 @@ func asInt(x interface{}) (result int64, isValid ValidFlag, err error) {
 	return result, true, nil
 }
 
+// asBool converts a specified value to string value.
 func asString(x interface{}) (result string, isValid ValidFlag, err error) {
 	switch x.(type) {
 	case nil:
@@ -181,6 +185,7 @@ func asString(x interface{}) (result string, isValid ValidFlag, err error) {
 	return result, true, nil
 }
 
+// asBool converts a specified value to time.Time value.
 func asTime(x interface{}) (result time.Time, isValid ValidFlag, err error) {
 	switch x.(type) {
 	case nil:
@@ -199,6 +204,7 @@ func asTime(x interface{}) (result time.Time, isValid ValidFlag, err error) {
 	return result, true, nil
 }
 
+// asBool converts a specified value to uint64 value.
 func asUint(x interface{}) (result uint64, isValid ValidFlag, err error) {
 	switch x.(type) {
 	case nil:

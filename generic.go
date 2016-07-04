@@ -5,6 +5,7 @@ import (
 	"reflect"
 )
 
+// GenericType
 type GenericType interface {
 	Valid() bool
 	Value() interface{}
@@ -13,20 +14,25 @@ type GenericType interface {
 	Reset()
 }
 
+// ErrInvalidGenericValue
 type ErrInvalidGenericValue struct {
 	Value interface{}
 }
 
+// ValidFlag
 type ValidFlag bool
 
+// Reset
 func (v *ValidFlag) Reset() {
 	*v = false
 }
 
+// Valid validates the specified value is nil or not.
 func (v ValidFlag) Valid() bool {
 	return bool(v)
 }
 
+// Error
 func (e ErrInvalidGenericValue) Error() string {
 	buf := bytes.Buffer{}
 	buf.WriteString("invalid value: ")
