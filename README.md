@@ -4,6 +4,7 @@
 [![Build Status](http://img.shields.io/travis/usk81/generic.svg?style=flat-square)](https://travis-ci.org/usk81/generic)
 [![Coverage Status](https://img.shields.io/coveralls/usk81/generic.svg?style=flat-square)](https://coveralls.io/github/usk81/generic?branch=master)
 [![Gratipay User](https://img.shields.io/gratipay/user/YusukeKomatsu.svg?style=flat-square)](https://gratipay.com/YusukeKomatsu/)
+[![Go Report Card](https://goreportcard.com/badge/github.com/usk81/generic)](https://goreportcard.com/report/github.com/usk81/generic)
 
 flexible data type for Go
 
