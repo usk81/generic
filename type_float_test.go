@@ -74,8 +74,8 @@ func TestTypeFloatSetInt64(t *testing.T) {
 }
 
 func TestTypeFloatSetNumericString(t *testing.T) {
-	var v string = "56.0001"
-	var expected float64 = 56.0001
+	v := "56.0001"
+	expected := 56.0001
 	ti := TypeFloat{}
 	err := ti.Set(v)
 	if err != nil {
@@ -87,8 +87,8 @@ func TestTypeFloatSetNumericString(t *testing.T) {
 }
 
 func TestTypeFloatSetNonNumericString(t *testing.T) {
-	var v string = "a"
-	var expected float64 = 0
+	v := "a"
+	var expected float64
 	ti := TypeFloat{}
 	err := ti.Set(v)
 	if err == nil {

@@ -74,7 +74,7 @@ func TestTypeIntSetInt64(t *testing.T) {
 }
 
 func TestTypeIntSetNumericString(t *testing.T) {
-	var v string = "56"
+	v := "56"
 	var expected int64 = 56
 	ti := TypeInt{}
 	err := ti.Set(v)
@@ -87,8 +87,8 @@ func TestTypeIntSetNumericString(t *testing.T) {
 }
 
 func TestTypeIntSetNonNumericString(t *testing.T) {
-	var v string = "a"
-	var expected int64 = 0
+	v := "a"
+	var expected int64
 	ti := TypeInt{}
 	err := ti.Set(v)
 	if err == nil {

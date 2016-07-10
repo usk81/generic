@@ -74,7 +74,7 @@ func TestTypeUintSetInt64(t *testing.T) {
 }
 
 func TestTypeUintSetNumericString(t *testing.T) {
-	var v string = "56"
+	v := "56"
 	var expected uint64 = 56
 	tu := TypeUint{}
 	err := tu.Set(v)
@@ -87,8 +87,8 @@ func TestTypeUintSetNumericString(t *testing.T) {
 }
 
 func TestTypeUintSetNonNumericString(t *testing.T) {
-	var v string = "a"
-	var expected uint64 = 0
+	v := "a"
+	var expected uint64
 	tu := TypeUint{}
 	err := tu.Set(v)
 	if err == nil {

@@ -8,6 +8,7 @@ type TypeInt struct {
 	Int int64
 }
 
+// Value returns TypeInt.Int, but if TypeInt.ValidFlag is false, returns nil.
 func (v TypeInt) Value() interface{} {
 	if !v.Valid() {
 		return nil
@@ -25,6 +26,7 @@ func (v *TypeInt) Scan(x interface{}) (err error) {
 	return
 }
 
+// Set sets a specified value.
 func (v *TypeInt) Set(x interface{}) (err error) {
 	return v.Scan(x)
 }

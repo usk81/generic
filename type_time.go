@@ -11,6 +11,7 @@ type TypeTime struct {
 	Time time.Time
 }
 
+// Value returns TypeTime.Time, but if TypeTime.ValidFlag is false, returns nil.
 func (v TypeTime) Value() interface{} {
 	if !v.Valid() {
 		return nil
@@ -28,6 +29,7 @@ func (v *TypeTime) Scan(x interface{}) (err error) {
 	return
 }
 
+// Set sets a specified value.
 func (v *TypeTime) Set(x interface{}) (err error) {
 	return v.Scan(x)
 }

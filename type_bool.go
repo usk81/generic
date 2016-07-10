@@ -8,6 +8,7 @@ type TypeBool struct {
 	Bool bool
 }
 
+// Value returns TypeBool.Bool, but if TypeBool.ValidFlag is false, returns nil.
 func (v TypeBool) Value() interface{} {
 	if !v.Valid() {
 		return nil
@@ -25,6 +26,7 @@ func (v *TypeBool) Scan(x interface{}) (err error) {
 	return
 }
 
+// Set sets a specified value.
 func (v *TypeBool) Set(x interface{}) (err error) {
 	return v.Scan(x)
 }

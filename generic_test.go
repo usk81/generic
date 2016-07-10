@@ -12,7 +12,7 @@ func TestErrInvalidGenericValueNull(t *testing.T) {
 
 func TestErrInvalidGenericValueString(t *testing.T) {
 	expected := "invalid value: (string)"
-	var testVal string = "aaaaaaa"
+	testVal := "aaaaaaa"
 	err := ErrInvalidGenericValue{Value: testVal}
 	if err.Error() != expected {
 		t.Errorf("actual:%s, expected:%s", err.Error(), expected)

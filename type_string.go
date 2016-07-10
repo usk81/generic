@@ -8,6 +8,7 @@ type TypeString struct {
 	String string
 }
 
+// Value returns TypeString.String, but if TypeString.ValidFlag is false, returns nil.
 func (v TypeString) Value() interface{} {
 	if !v.Valid() {
 		return nil
@@ -25,6 +26,7 @@ func (v *TypeString) Scan(x interface{}) (err error) {
 	return
 }
 
+// Set sets a specified value.
 func (v *TypeString) Set(x interface{}) (err error) {
 	return v.Scan(x)
 }

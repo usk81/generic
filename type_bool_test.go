@@ -62,7 +62,7 @@ func TestTypeBoolSetNil(t *testing.T) {
 
 func TestTypeBoolSetInt64(t *testing.T) {
 	var v int64 = 100
-	var expected bool = true
+	expected := true
 	ts := TypeBool{}
 	err := ts.Set(v)
 	if err != nil {
@@ -74,8 +74,8 @@ func TestTypeBoolSetInt64(t *testing.T) {
 }
 
 func TestTypeBoolSetString(t *testing.T) {
-	var v string = "false"
-	var expected bool = false
+	v := "false"
+	expected := false
 	ts := TypeBool{}
 	err := ts.Set(v)
 	if err != nil {

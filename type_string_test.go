@@ -44,7 +44,7 @@ func TestTypeStringSetNil(t *testing.T) {
 
 func TestTypeStringSetInt64(t *testing.T) {
 	var v int64 = 100
-	var expected string = "100"
+	expected := "100"
 	ts := TypeString{}
 	err := ts.Set(v)
 	if err != nil {
@@ -56,8 +56,8 @@ func TestTypeStringSetInt64(t *testing.T) {
 }
 
 func TestTypeStringSetString(t *testing.T) {
-	var v string = "vcrtyhjki876tfdews"
-	var expected string = "vcrtyhjki876tfdews"
+	v := "vcrtyhjki876tfdews"
+	expected := "vcrtyhjki876tfdews"
 	ts := TypeString{}
 	err := ts.Set(v)
 	if err != nil {
@@ -69,8 +69,8 @@ func TestTypeStringSetString(t *testing.T) {
 }
 
 func TestTypeStringSetBool(t *testing.T) {
-	var v bool = true
-	var expected string = "true"
+	v := true
+	expected := "true"
 	ts := TypeString{}
 	err := ts.Set(v)
 	if err != nil {

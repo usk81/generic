@@ -8,6 +8,7 @@ type TypeFloat struct {
 	Float float64
 }
 
+// Value returns TypeFloat.Float, but if TypeFloat.ValidFlag is false, returns nil.
 func (v TypeFloat) Value() interface{} {
 	if !v.Valid() {
 		return nil
@@ -25,6 +26,7 @@ func (v *TypeFloat) Scan(x interface{}) (err error) {
 	return
 }
 
+// Set sets a specified value.
 func (v *TypeFloat) Set(x interface{}) (err error) {
 	return v.Scan(x)
 }

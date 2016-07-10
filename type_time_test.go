@@ -63,7 +63,7 @@ func TestTypeTimeSetNil(t *testing.T) {
 
 func TestTypeTimeSetInt64(t *testing.T) {
 	var v int64 = 1367059792
-	var expected time.Time = time.Unix(v, 0)
+	expected := time.Unix(v, 0)
 	tt := TypeTime{}
 	err := tt.Set(v)
 	if err != nil {
@@ -75,8 +75,8 @@ func TestTypeTimeSetInt64(t *testing.T) {
 }
 
 func TestTypeTimeSetNumericString(t *testing.T) {
-	var v string = "1467059792"
-	var expected time.Time = time.Unix(1467059792, 0)
+	v := "1467059792"
+	expected := time.Unix(1467059792, 0)
 	tt := TypeTime{}
 	err := tt.Set(v)
 	if err != nil {
@@ -88,8 +88,8 @@ func TestTypeTimeSetNumericString(t *testing.T) {
 }
 
 func TestTypeTimeSetNonNumericString(t *testing.T) {
-	var v string = "a"
-	var expected time.Time = time.Unix(0, 0)
+	v := "a"
+	expected := time.Unix(0, 0)
 	tt := TypeTime{}
 	err := tt.Set(v)
 	if err == nil {
@@ -101,8 +101,8 @@ func TestTypeTimeSetNonNumericString(t *testing.T) {
 }
 
 func TestTypeTimeSetBool(t *testing.T) {
-	var v bool = true
-	var expected time.Time = time.Unix(0, 0)
+	v := true
+	expected := time.Unix(0, 0)
 	tt := TypeTime{}
 	err := tt.Set(v)
 	if err == nil {
