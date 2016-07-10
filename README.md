@@ -17,7 +17,7 @@ go get -u github.com/usk81/generic
 
 ## Usage
 
-encode:
+encode/decode:
 
 ```go
 package main
@@ -45,6 +45,57 @@ json.Unmarshal([]byte(u2), &user2)
 b, _ := json.Marshal(user2)
 Println(string(b))
 // {"name":"Rick Grimes","age":null}
+```
+
+set:
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/usk81/generic"
+)
+
+func main() {
+	v := 1.0
+
+	var tb generic.TypeBool
+	tb.Set(v)
+	vb := tb.Value()
+	fmt.Printf("%v, (%T)\n", vb, vb)
+	// true, (bool)
+
+	var tf generic.TypeFloat
+	tf.Set(v)
+	vf := tf.Value()
+	fmt.Printf("%v, (%T)\n", vf, vf)
+	// 1, (float64)
+
+	var ti generic.TypeInt
+	ti.Set(v)
+	vi := ti.Value()
+	fmt.Printf("%v, (%T)\n", vi, vi)
+	// 1, (int64)
+
+	var ts generic.TypeString
+	ts.Set(v)
+	vs := ts.Value()
+	fmt.Printf("%v, (%T)\n", vs, vs)
+	// 1, (string)
+
+	var tt generic.TypeTime
+	tt.Set(v)
+	vt := tt.Value()
+	fmt.Printf("%v, (%T)\n", vt.UTC(), vt)
+	// 1970-01-01 09:00:01 +0900 JST, (time.Time)
+
+	var tu generic.TypeUint
+	tu.Set(v)
+	vu := tu.Value()
+	fmt.Printf("%v, (%T)\n", vu, vu)
+	// 1, (uint64)
+}
 ```
 
 ## Licence
