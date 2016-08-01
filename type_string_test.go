@@ -6,14 +6,14 @@ import (
 )
 
 type TestStringStruct struct {
-	Int       TypeString `json:"int"`
-	Float     TypeString `json:"float"`
-	Bool      TypeString `json:"bool"`
-	String    TypeString `json:"string"`
-	NullValue TypeString `json:"null_value"`
+	Int       String `json:"int"`
+	Float     String `json:"float"`
+	Bool      String `json:"bool"`
+	String    String `json:"string"`
+	NullValue String `json:"null_value"`
 }
 
-func TestTypeStringJsonUnmarshalAndMarshal(t *testing.T) {
+func TestStringJsonUnmarshalAndMarshal(t *testing.T) {
 	var ts TestStringStruct
 	jstr := `{"int":10,"float":1.1,"bool":false,"string":"qwertyuiopkjhgv876","null_value":null}`
 	expected := `{"int":"10","float":"1.1","bool":"false","string":"qwertyuiopkjhgv876","null_value":null}`
@@ -31,8 +31,8 @@ func TestTypeStringJsonUnmarshalAndMarshal(t *testing.T) {
 	}
 }
 
-func TestTypeStringSetNil(t *testing.T) {
-	ts := TypeString{}
+func TestStringSetNil(t *testing.T) {
+	ts := String{}
 	err := ts.Set(nil)
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
@@ -42,10 +42,10 @@ func TestTypeStringSetNil(t *testing.T) {
 	}
 }
 
-func TestTypeStringSetInt64(t *testing.T) {
+func TestStringSetInt64(t *testing.T) {
 	var v int64 = 100
 	expected := "100"
-	ts := TypeString{}
+	ts := String{}
 	err := ts.Set(v)
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
@@ -55,10 +55,10 @@ func TestTypeStringSetInt64(t *testing.T) {
 	}
 }
 
-func TestTypeStringSetString(t *testing.T) {
+func TestStringSetString(t *testing.T) {
 	v := "vcrtyhjki876tfdews"
 	expected := "vcrtyhjki876tfdews"
-	ts := TypeString{}
+	ts := String{}
 	err := ts.Set(v)
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
@@ -68,10 +68,10 @@ func TestTypeStringSetString(t *testing.T) {
 	}
 }
 
-func TestTypeStringSetBool(t *testing.T) {
+func TestStringSetBool(t *testing.T) {
 	v := true
 	expected := "true"
-	ts := TypeString{}
+	ts := String{}
 	err := ts.Set(v)
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())

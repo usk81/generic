@@ -8,13 +8,13 @@ import (
 )
 
 type TestTimeStruct struct {
-	Int       TypeTime `json:"int"`
-	Float     TypeTime `json:"float"`
-	String    TypeTime `json:"string"`
-	NullValue TypeTime `json:"null_value"`
+	Int       Time `json:"int"`
+	Float     Time `json:"float"`
+	String    Time `json:"string"`
+	NullValue Time `json:"null_value"`
 }
 
-func TestTypeTimeJsonUnmarshalAndMarshal(t *testing.T) {
+func TestTimeJsonUnmarshalAndMarshal(t *testing.T) {
 	var ts TestTimeStruct
 	jstr := `{"int":10,"float":1.0,"string":"50","null_value":null}`
 	expected := fmt.Sprintf(`{"int":"%s","float":"%s","string":"%s","null_value":null}`, time.Unix(10, 0).Format(time.RFC3339), time.Unix(1, 0).Format(time.RFC3339), time.Unix(50, 0).Format(time.RFC3339))
@@ -32,7 +32,7 @@ func TestTypeTimeJsonUnmarshalAndMarshal(t *testing.T) {
 	}
 }
 
-func TestTypeTimeJsonError(t *testing.T) {
+func TestTimeJsonError(t *testing.T) {
 	var ts TestTimeStruct
 	jstr := `{"int":0,"float":1.0,"string":"あ","null_value":null}`
 	expected := fmt.Sprintf(`{"int":"%s","float":"%s","string":null,"null_value":null}`, time.Unix(0, 0).Format(time.RFC3339), time.Unix(1, 0).Format(time.RFC3339))
@@ -50,8 +50,8 @@ func TestTypeTimeJsonError(t *testing.T) {
 	}
 }
 
-func TestTypeTimeSetNil(t *testing.T) {
-	tt := TypeUint{}
+func TestTimeSetNil(t *testing.T) {
+	tt := Uint{}
 	err := tt.Set(nil)
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
@@ -61,10 +61,10 @@ func TestTypeTimeSetNil(t *testing.T) {
 	}
 }
 
-func TestTypeTimeSetInt64(t *testing.T) {
+func TestTimeSetInt64(t *testing.T) {
 	var v int64 = 1367059792
 	expected := time.Unix(v, 0)
-	tt := TypeTime{}
+	tt := Time{}
 	err := tt.Set(v)
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
@@ -74,10 +74,10 @@ func TestTypeTimeSetInt64(t *testing.T) {
 	}
 }
 
-func TestTypeTimeSetNumericString(t *testing.T) {
+func TestTimeSetNumericString(t *testing.T) {
 	v := "1467059792"
 	expected := time.Unix(1467059792, 0)
-	tt := TypeTime{}
+	tt := Time{}
 	err := tt.Set(v)
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
@@ -87,10 +87,10 @@ func TestTypeTimeSetNumericString(t *testing.T) {
 	}
 }
 
-func TestTypeTimeSetNonNumericString(t *testing.T) {
+func TestTimeSetNonNumericString(t *testing.T) {
 	v := "a"
 	expected := time.Unix(0, 0)
-	tt := TypeTime{}
+	tt := Time{}
 	err := tt.Set(v)
 	if err == nil {
 		t.Error("Expected error.")
@@ -100,10 +100,10 @@ func TestTypeTimeSetNonNumericString(t *testing.T) {
 	}
 }
 
-func TestTypeTimeSetBool(t *testing.T) {
+func TestTimeSetBool(t *testing.T) {
 	v := true
 	expected := time.Unix(0, 0)
-	tt := TypeTime{}
+	tt := Time{}
 	err := tt.Set(v)
 	if err == nil {
 		t.Error("Expected error.")

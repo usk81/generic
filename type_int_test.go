@@ -6,14 +6,14 @@ import (
 )
 
 type TestIntStruct struct {
-	Int       TypeInt `json:"int"`
-	Float     TypeInt `json:"float"`
-	Bool      TypeInt `json:"bool"`
-	String    TypeInt `json:"string"`
-	NullValue TypeInt `json:"null_value"`
+	Int       Int `json:"int"`
+	Float     Int `json:"float"`
+	Bool      Int `json:"bool"`
+	String    Int `json:"string"`
+	NullValue Int `json:"null_value"`
 }
 
-func TestTypeIntJsonUnmarshalAndMarshal(t *testing.T) {
+func TestIntJsonUnmarshalAndMarshal(t *testing.T) {
 	var ts TestIntStruct
 	jstr := `{"int":10,"float":1.0,"bool":true,"string":"50","null_value":null}`
 	expected := `{"int":10,"float":1,"bool":1,"string":50,"null_value":null}`
@@ -31,7 +31,7 @@ func TestTypeIntJsonUnmarshalAndMarshal(t *testing.T) {
 	}
 }
 
-func TestTypeIntJsonError(t *testing.T) {
+func TestIntJsonError(t *testing.T) {
 	var ts TestIntStruct
 	jstr := `{"int":10,"float":1.0,"bool":true,"string":"あ","null_value":null}`
 	expected := `{"int":10,"float":1,"bool":1,"string":null,"null_value":null}`
@@ -49,8 +49,8 @@ func TestTypeIntJsonError(t *testing.T) {
 	}
 }
 
-func TestTypeIntSetNil(t *testing.T) {
-	ti := TypeUint{}
+func TestIntSetNil(t *testing.T) {
+	ti := Uint{}
 	err := ti.Set(nil)
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
@@ -60,10 +60,10 @@ func TestTypeIntSetNil(t *testing.T) {
 	}
 }
 
-func TestTypeIntSetInt64(t *testing.T) {
+func TestIntSetInt64(t *testing.T) {
 	var v int64 = 100
 	var expected int64 = 100
-	ti := TypeInt{}
+	ti := Int{}
 	err := ti.Set(v)
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
@@ -73,10 +73,10 @@ func TestTypeIntSetInt64(t *testing.T) {
 	}
 }
 
-func TestTypeIntSetNumericString(t *testing.T) {
+func TestIntSetNumericString(t *testing.T) {
 	v := "56"
 	var expected int64 = 56
-	ti := TypeInt{}
+	ti := Int{}
 	err := ti.Set(v)
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
@@ -86,10 +86,10 @@ func TestTypeIntSetNumericString(t *testing.T) {
 	}
 }
 
-func TestTypeIntSetNonNumericString(t *testing.T) {
+func TestIntSetNonNumericString(t *testing.T) {
 	v := "a"
 	var expected int64
-	ti := TypeInt{}
+	ti := Int{}
 	err := ti.Set(v)
 	if err == nil {
 		t.Error("Expected error.")

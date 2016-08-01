@@ -6,14 +6,14 @@ import (
 )
 
 type TestFloatStruct struct {
-	Int       TypeFloat `json:"int"`
-	Float     TypeFloat `json:"float"`
-	Bool      TypeFloat `json:"bool"`
-	String    TypeFloat `json:"string"`
-	NullValue TypeFloat `json:"null_value"`
+	Int       Float `json:"int"`
+	Float     Float `json:"float"`
+	Bool      Float `json:"bool"`
+	String    Float `json:"string"`
+	NullValue Float `json:"null_value"`
 }
 
-func TestTypeFloatJsonUnmarshalAndMarshal(t *testing.T) {
+func TestFloatJsonUnmarshalAndMarshal(t *testing.T) {
 	var ts TestFloatStruct
 	jstr := `{"int":10,"float":1.0,"bool":true,"string":"50","null_value":null}`
 	expected := `{"int":10,"float":1,"bool":1,"string":50,"null_value":null}`
@@ -31,7 +31,7 @@ func TestTypeFloatJsonUnmarshalAndMarshal(t *testing.T) {
 	}
 }
 
-func TestTypeFloatJsonError(t *testing.T) {
+func TestFloatJsonError(t *testing.T) {
 	var ts TestFloatStruct
 	jstr := `{"int":10,"float":1.0,"bool":true,"string":"あ","null_value":null}`
 	expected := `{"int":10,"float":1,"bool":1,"string":null,"null_value":null}`
@@ -49,8 +49,8 @@ func TestTypeFloatJsonError(t *testing.T) {
 	}
 }
 
-func TestTypeFloatSetNil(t *testing.T) {
-	ti := TypeUint{}
+func TestFloatSetNil(t *testing.T) {
+	ti := Uint{}
 	err := ti.Set(nil)
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
@@ -60,10 +60,10 @@ func TestTypeFloatSetNil(t *testing.T) {
 	}
 }
 
-func TestTypeFloatSetInt64(t *testing.T) {
+func TestFloatSetInt64(t *testing.T) {
 	var v int64 = 100
 	var expected float64 = 100
-	ti := TypeFloat{}
+	ti := Float{}
 	err := ti.Set(v)
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
@@ -73,10 +73,10 @@ func TestTypeFloatSetInt64(t *testing.T) {
 	}
 }
 
-func TestTypeFloatSetNumericString(t *testing.T) {
+func TestFloatSetNumericString(t *testing.T) {
 	v := "56.0001"
 	expected := 56.0001
-	ti := TypeFloat{}
+	ti := Float{}
 	err := ti.Set(v)
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
@@ -86,10 +86,10 @@ func TestTypeFloatSetNumericString(t *testing.T) {
 	}
 }
 
-func TestTypeFloatSetNonNumericString(t *testing.T) {
+func TestFloatSetNonNumericString(t *testing.T) {
 	v := "a"
 	var expected float64
-	ti := TypeFloat{}
+	ti := Float{}
 	err := ti.Set(v)
 	if err == nil {
 		t.Error("Expected error.")

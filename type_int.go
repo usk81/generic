@@ -2,14 +2,14 @@ package generic
 
 import "encoding/json"
 
-// TypeInt
-type TypeInt struct {
+// Int
+type Int struct {
 	ValidFlag
 	Int int64
 }
 
-// Value returns TypeInt.Int, but if TypeInt.ValidFlag is false, returns nil.
-func (v TypeInt) Value() interface{} {
+// Value returns Int.Int, but if Int.ValidFlag is false, returns nil.
+func (v Int) Value() interface{} {
 	if !v.Valid() {
 		return nil
 	}
@@ -17,7 +17,7 @@ func (v TypeInt) Value() interface{} {
 }
 
 // Scan implements the sql.Scanner interface.
-func (v *TypeInt) Scan(x interface{}) (err error) {
+func (v *Int) Scan(x interface{}) (err error) {
 	v.Int, v.ValidFlag, err = asInt(x)
 	if err != nil {
 		v.ValidFlag = false
@@ -27,12 +27,12 @@ func (v *TypeInt) Scan(x interface{}) (err error) {
 }
 
 // Set sets a specified value.
-func (v *TypeInt) Set(x interface{}) (err error) {
+func (v *Int) Set(x interface{}) (err error) {
 	return v.Scan(x)
 }
 
 // MarshalJSON implements the json.Marshaler interface.
-func (v TypeInt) MarshalJSON() ([]byte, error) {
+func (v Int) MarshalJSON() ([]byte, error) {
 	if !v.Valid() {
 		return json.Marshal(nil)
 	}
@@ -40,7 +40,7 @@ func (v TypeInt) MarshalJSON() ([]byte, error) {
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
-func (v *TypeInt) UnmarshalJSON(data []byte) error {
+func (v *Int) UnmarshalJSON(data []byte) error {
 	var in interface{}
 	if err := json.Unmarshal(data, &in); err != nil {
 		return err

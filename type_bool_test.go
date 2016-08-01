@@ -6,14 +6,14 @@ import (
 )
 
 type TestBoolStruct struct {
-	Int       TypeBool `json:"int"`
-	Float     TypeBool `json:"float"`
-	Bool      TypeBool `json:"bool"`
-	String    TypeBool `json:"string"`
-	NullValue TypeBool `json:"null_value"`
+	Int       Bool `json:"int"`
+	Float     Bool `json:"float"`
+	Bool      Bool `json:"bool"`
+	String    Bool `json:"string"`
+	NullValue Bool `json:"null_value"`
 }
 
-func TestTypeBoolJsonUnmarshalAndMarshal(t *testing.T) {
+func TestBoolJsonUnmarshalAndMarshal(t *testing.T) {
 	var ts TestBoolStruct
 	jstr := `{"int":10,"float":1.1,"bool":false,"string":"1","null_value":null}`
 	expected := `{"int":true,"float":true,"bool":false,"string":true,"null_value":null}`
@@ -31,7 +31,7 @@ func TestTypeBoolJsonUnmarshalAndMarshal(t *testing.T) {
 	}
 }
 
-func TestTypeBoolJsonError(t *testing.T) {
+func TestBoolJsonError(t *testing.T) {
 	var ts TestBoolStruct
 	jstr := `{"int":10,"float":1.0,"bool":true,"string":"あ","null_value":null}`
 	expected := `{"int":true,"float":true,"bool":true,"string":null,"null_value":null}`
@@ -49,8 +49,8 @@ func TestTypeBoolJsonError(t *testing.T) {
 	}
 }
 
-func TestTypeBoolSetNil(t *testing.T) {
-	ts := TypeBool{}
+func TestBoolSetNil(t *testing.T) {
+	ts := Bool{}
 	err := ts.Set(nil)
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
@@ -60,10 +60,10 @@ func TestTypeBoolSetNil(t *testing.T) {
 	}
 }
 
-func TestTypeBoolSetInt64(t *testing.T) {
+func TestBoolSetInt64(t *testing.T) {
 	var v int64 = 100
 	expected := true
-	ts := TypeBool{}
+	ts := Bool{}
 	err := ts.Set(v)
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
@@ -73,10 +73,10 @@ func TestTypeBoolSetInt64(t *testing.T) {
 	}
 }
 
-func TestTypeBoolSetString(t *testing.T) {
+func TestBoolSetString(t *testing.T) {
 	v := "false"
 	expected := false
-	ts := TypeBool{}
+	ts := Bool{}
 	err := ts.Set(v)
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
