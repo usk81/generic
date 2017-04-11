@@ -192,16 +192,148 @@ func asTime(x interface{}) (result time.Time, isValid ValidFlag, err error) {
 		return result, false, nil
 	case time.Time:
 		result = x.(time.Time)
-	case bool:
-		return result, false, ErrInvalidGenericValue{Value: x}
-	default:
-		i64, _, err := asInt(x)
-		if err != nil {
-			return result, false, ErrInvalidGenericValue{Value: x}
+		if result.IsZero() {
+			return result, false, nil
 		}
-		result = time.Unix(i64, 0)
+	default:
+		return result, false, ErrInvalidGenericValue{Value: x}
 	}
 	return result, true, nil
+}
+
+// asTimestamp converts a specified value to time.Time value.
+func asTimestamp(x interface{}) (result time.Time, isValid ValidFlag, err error) {
+	var i int64
+	switch x.(type) {
+	case nil:
+		return result, false, nil
+	case time.Time:
+		result = x.(time.Time)
+		if result.IsZero() {
+			return result, false, nil
+		}
+		return result, true, nil
+	case int:
+		i = int64(x.(int))
+	case int8:
+		i = int64(x.(int8))
+	case int16:
+		i = int64(x.(int16))
+	case int32:
+		i = int64(x.(int32))
+	case int64:
+		i = x.(int64)
+	case uint:
+		i = int64(x.(uint))
+	case uint8:
+		i = int64(x.(uint8))
+	case uint16:
+		i = int64(x.(uint16))
+	case uint32:
+		i = int64(x.(uint32))
+	case uint64:
+		i = int64(x.(uint64))
+	case float32:
+		i = int64(x.(float32))
+	case float64:
+		i = int64(x.(float64))
+	default:
+		return result, false, ErrInvalidGenericValue{Value: x}
+	}
+	if i < 0 {
+		return result, false, ErrInvalidGenericValue{Value: x}
+	}
+	return time.Unix(i, 0), true, nil
+}
+
+// asTimestampNanoseconds converts a specified value to time.Time value.
+func asTimestampNanoseconds(x interface{}) (result time.Time, isValid ValidFlag, err error) {
+	var i int64
+	switch x.(type) {
+	case nil:
+		return result, false, nil
+	case time.Time:
+		result = x.(time.Time)
+		if result.IsZero() {
+			return result, false, nil
+		}
+		return result, true, nil
+	case int:
+		i = int64(x.(int))
+	case int8:
+		i = int64(x.(int8))
+	case int16:
+		i = int64(x.(int16))
+	case int32:
+		i = int64(x.(int32))
+	case int64:
+		i = x.(int64)
+	case uint:
+		i = int64(x.(uint))
+	case uint8:
+		i = int64(x.(uint8))
+	case uint16:
+		i = int64(x.(uint16))
+	case uint32:
+		i = int64(x.(uint32))
+	case uint64:
+		i = int64(x.(uint64))
+	case float32:
+		i = int64(x.(float32))
+	case float64:
+		i = int64(x.(float64))
+	default:
+		return result, false, ErrInvalidGenericValue{Value: x}
+	}
+	if i < 0 {
+		return result, false, ErrInvalidGenericValue{Value: x}
+	}
+	return time.Unix(0, i), true, nil
+}
+
+// asTimestampMilliseconds converts a specified value to time.Time value.
+func asTimestampMilliseconds(x interface{}) (result time.Time, isValid ValidFlag, err error) {
+	var i int64
+	switch x.(type) {
+	case nil:
+		return result, false, nil
+	case time.Time:
+		result = x.(time.Time)
+		if result.IsZero() {
+			return result, false, nil
+		}
+		return result, true, nil
+	case int:
+		i = int64(x.(int))
+	case int8:
+		i = int64(x.(int8))
+	case int16:
+		i = int64(x.(int16))
+	case int32:
+		i = int64(x.(int32))
+	case int64:
+		i = x.(int64)
+	case uint:
+		i = int64(x.(uint))
+	case uint8:
+		i = int64(x.(uint8))
+	case uint16:
+		i = int64(x.(uint16))
+	case uint32:
+		i = int64(x.(uint32))
+	case uint64:
+		i = int64(x.(uint64))
+	case float32:
+		i = int64(x.(float32))
+	case float64:
+		i = int64(x.(float64))
+	default:
+		return result, false, ErrInvalidGenericValue{Value: x}
+	}
+	if i < 0 {
+		return result, false, ErrInvalidGenericValue{Value: x}
+	}
+	return time.Unix(0, i*1000000), true, nil
 }
 
 // asBool converts a specified value to uint64 value.
