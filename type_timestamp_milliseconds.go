@@ -40,7 +40,7 @@ func (v TimestampMS) MarshalJSON() ([]byte, error) {
 	if !v.Valid() {
 		return json.Marshal(nil)
 	}
-	return []byte(strconv.FormatInt(v.Time.Unix(), 10)), nil
+	return []byte(strconv.FormatInt(v.Time.UnixNano()/1000000, 10)), nil
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
