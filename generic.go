@@ -5,7 +5,7 @@ import (
 	"reflect"
 )
 
-// GenericType
+// GenericType is the interface used as the basis for generic types
 type GenericType interface {
 	Valid() bool
 	Value() interface{}
@@ -14,7 +14,7 @@ type GenericType interface {
 	Reset()
 }
 
-// ErrInvalidGenericValue
+// ErrInvalidGenericValue is used as error in generic types
 type ErrInvalidGenericValue struct {
 	Value interface{}
 }
@@ -22,7 +22,7 @@ type ErrInvalidGenericValue struct {
 // ValidFlag
 type ValidFlag bool
 
-// Reset
+// Reset resets ValidFlag
 func (v *ValidFlag) Reset() {
 	*v = false
 }
