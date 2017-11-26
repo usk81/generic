@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// Timestamp
+// TimestampNano is a wrapped time type structure
 type TimestampNano struct {
 	ValidFlag
 	Time time.Time
@@ -38,7 +38,7 @@ func (v *TimestampNano) Set(x interface{}) (err error) {
 // MarshalJSON implements the json.Marshaler interface.
 func (v TimestampNano) MarshalJSON() ([]byte, error) {
 	if !v.Valid() {
-		return json.Marshal(nil)
+		return nullBytes, nil
 	}
 	return []byte(strconv.FormatInt(v.Time.UnixNano(), 10)), nil
 }

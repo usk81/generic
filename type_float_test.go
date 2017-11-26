@@ -50,13 +50,13 @@ func TestFloatJsonError(t *testing.T) {
 }
 
 func TestFloatSetNil(t *testing.T) {
-	ti := Uint{}
+	ti := Float{}
 	err := ti.Set(nil)
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
 	}
-	if ti.Value() != nil {
-		t.Errorf("This value should return nil. error:%#v", ti.Value())
+	if ti.Weak() != nil {
+		t.Errorf("This value should return nil. error:%#v", ti.Weak())
 	}
 }
 
@@ -68,8 +68,8 @@ func TestFloatSetInt64(t *testing.T) {
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
 	}
-	if ti.Value() != expected {
-		t.Errorf("actual:%#v, expected:%#v", ti.Value(), expected)
+	if ti.Weak() != expected {
+		t.Errorf("actual:%#v, expected:%#v", ti.Weak(), expected)
 	}
 }
 
@@ -81,8 +81,8 @@ func TestFloatSetNumericString(t *testing.T) {
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
 	}
-	if ti.Value() != expected {
-		t.Errorf("actual:%v, expected:%v", ti.Value(), expected)
+	if ti.Weak() != expected {
+		t.Errorf("actual:%v, expected:%v", ti.Weak(), expected)
 	}
 }
 
@@ -94,7 +94,7 @@ func TestFloatSetNonNumericString(t *testing.T) {
 	if err == nil {
 		t.Error("Expected error.")
 	}
-	if ti.Value() == expected {
-		t.Errorf("This value should return 0. value:%#v", ti.Value())
+	if ti.Weak() == expected {
+		t.Errorf("This value should return 0. value:%#v", ti.Weak())
 	}
 }

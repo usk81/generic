@@ -8,8 +8,8 @@ func TestTimeSetNil(t *testing.T) {
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
 	}
-	if tt.Value() != nil {
-		t.Errorf("This value should return nil. error:%#v", tt.Value())
+	if tt.Weak() != nil {
+		t.Errorf("This value should return nil. error:%#v", tt.Weak())
 	}
 }
 
@@ -20,8 +20,8 @@ func TestTimeSetInt64(t *testing.T) {
 	if err == nil {
 		t.Errorf("Not Expected error")
 	}
-	if tt.Value() != nil {
-		t.Errorf("This value should return nil. error:%#v", tt.Value())
+	if tt.Weak() != nil {
+		t.Errorf("This value should return nil. error:%#v", tt.Weak())
 	}
 }
 
@@ -32,8 +32,8 @@ func TestTimeSetNumericString(t *testing.T) {
 	if err == nil {
 		t.Errorf("Expected error.")
 	}
-	if tt.Value() != nil {
-		t.Errorf("This value should return nil. error:%#v", tt.Value())
+	if tt.Weak() != nil {
+		t.Errorf("This value should return nil. error:%#v", tt.Weak())
 	}
 }
 
@@ -44,8 +44,8 @@ func TestTimeSetNonNumericString(t *testing.T) {
 	if err == nil {
 		t.Error("Expected error.")
 	}
-	if tt.Value() != nil {
-		t.Errorf("This value should return nil. error:%#v", tt.Value())
+	if tt.Weak() != nil {
+		t.Errorf("This value should return nil. error:%#v", tt.Weak())
 	}
 }
 
@@ -56,7 +56,7 @@ func TestTimeSetBool(t *testing.T) {
 	if err == nil {
 		t.Error("Expected error.")
 	}
-	if tt.Value() != nil {
-		t.Errorf("This value should return nil. error:%#v", tt.Value())
+	if tt.Weak() != nil {
+		t.Errorf("This value should return nil. error:%#v", tt.Weak())
 	}
 }

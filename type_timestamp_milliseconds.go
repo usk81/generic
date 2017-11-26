@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// TimestampMS
+// TimestampMS is a wrapped time type structure
 type TimestampMS struct {
 	ValidFlag
 	Time time.Time
@@ -38,13 +38,16 @@ func (v *TimestampMS) Set(x interface{}) (err error) {
 // MarshalJSON implements the json.Marshaler interface.
 func (v TimestampMS) MarshalJSON() ([]byte, error) {
 	if !v.Valid() {
-		return json.Marshal(nil)
+		return nullBytes, nil
 	}
 	return []byte(strconv.FormatInt(v.Time.UnixNano()/1000000, 10)), nil
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
 func (v *TimestampMS) UnmarshalJSON(data []byte) error {
+	if data == nil || len(data) == 0 {
+		return nil
+	}
 	var in interface{}
 	if err := json.Unmarshal(data, &in); err != nil {
 		return err

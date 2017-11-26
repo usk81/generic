@@ -55,8 +55,8 @@ func TestUintSetNil(t *testing.T) {
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
 	}
-	if tu.Value() != nil {
-		t.Errorf("This value should return nil. error:%#v", tu.Value())
+	if tu.Weak() != nil {
+		t.Errorf("This value should return nil. error:%#v", tu.Weak())
 	}
 }
 
@@ -68,8 +68,8 @@ func TestUintSetInt64(t *testing.T) {
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
 	}
-	if tu.Value() != expected {
-		t.Errorf("This value should return 100 (uint64). value:%#v", tu.Value())
+	if tu.Weak() != expected {
+		t.Errorf("This value should return 100 (uint64). value:%#v", tu.Weak())
 	}
 }
 
@@ -81,8 +81,8 @@ func TestUintSetNumericString(t *testing.T) {
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
 	}
-	if tu.Value() != expected {
-		t.Errorf("This value should return nil. error:%#v", tu.Value())
+	if tu.Weak() != expected {
+		t.Errorf("This value should return nil. error:%#v", tu.Weak())
 	}
 }
 
@@ -94,7 +94,7 @@ func TestUintSetNonNumericString(t *testing.T) {
 	if err == nil {
 		t.Error("Expected error.")
 	}
-	if tu.Value() == expected {
-		t.Errorf("This value should return 0. value:%#v", tu.Value())
+	if tu.Weak() == expected {
+		t.Errorf("This value should return 0. value:%#v", tu.Weak())
 	}
 }

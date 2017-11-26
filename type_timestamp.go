@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// Timestamp
+// Timestamp is a wrapped time type structure
 type Timestamp struct {
 	ValidFlag
 	Time time.Time
@@ -38,7 +38,7 @@ func (v *Timestamp) Set(x interface{}) (err error) {
 // MarshalJSON implements the json.Marshaler interface.
 func (v Timestamp) MarshalJSON() ([]byte, error) {
 	if !v.Valid() {
-		return json.Marshal(nil)
+		return nullBytes, nil
 	}
 	return []byte(strconv.FormatInt(v.Time.Unix(), 10)), nil
 }

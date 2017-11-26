@@ -55,8 +55,8 @@ func TestBoolSetNil(t *testing.T) {
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
 	}
-	if ts.Value() != nil {
-		t.Errorf("This value should return nil. error:%#v", ts.Value())
+	if ts.Weak() != nil {
+		t.Errorf("This value should return nil. error:%#v", ts.Weak())
 	}
 }
 
@@ -68,8 +68,8 @@ func TestBoolSetInt64(t *testing.T) {
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
 	}
-	if ts.Value() != expected {
-		t.Errorf("actual:%v, expected:%v", ts.Value(), expected)
+	if ts.Weak() != expected {
+		t.Errorf("actual:%v, expected:%v", ts.Weak(), expected)
 	}
 }
 
@@ -81,7 +81,7 @@ func TestBoolSetString(t *testing.T) {
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
 	}
-	if ts.Value() != expected {
-		t.Errorf("actual:%v, expected:%v", ts.Value(), expected)
+	if ts.Weak() != expected {
+		t.Errorf("actual:%v, expected:%v", ts.Weak(), expected)
 	}
 }
