@@ -63,37 +63,37 @@ func main() {
 
 	var tb generic.Bool
 	tb.Set(v)
-	vb := tb.Value()
+	vb := tb.Weak()
 	fmt.Printf("%v, (%T)\n", vb, vb)
 	// true, (bool)
 
 	var tf generic.Float
 	tf.Set(v)
-	vf := tf.Value()
+	vf := tf.Weak()
 	fmt.Printf("%v, (%T)\n", vf, vf)
 	// 1, (float64)
 
 	var ti generic.Int
 	ti.Set(v)
-	vi := ti.Value()
+	vi := ti.Weak()
 	fmt.Printf("%v, (%T)\n", vi, vi)
 	// 1, (int64)
 
 	var ts generic.String
 	ts.Set(v)
-	vs := ts.Value()
+	vs := ts.Weak()
 	fmt.Printf("%v, (%T)\n", vs, vs)
 	// 1, (string)
 
 	var tt generic.Time
 	tt.Set(v)
-	vt := tt.Value()
+	vt := tt.Weak()
 	fmt.Printf("%v, (%T)\n", vt.UTC(), vt)
 	// 1970-01-01 09:00:01 +0900 JST, (time.Time)
 
 	var tu generic.Uint
 	tu.Set(v)
-	vu := tu.Value()
+	vu := tu.Weak()
 	fmt.Printf("%v, (%T)\n", vu, vu)
 	// 1, (uint64)
 }
