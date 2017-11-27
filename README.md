@@ -99,6 +99,80 @@ func main() {
 }
 ```
 
+## Benchmarks
+
+### Marshal
+
+#### Bool
+
+| version | requests | /op | B/op | allocs/op |
+|---|---|---|---|---|
+| 1.0.0  | 5000000 | 240 ns | 185 | 3 |
+| 2.0.0  | 200000000 | 6.69 ns | 0 | 0 |
+
+#### Float
+
+| version | requests | /op | B/op | allocs/op |
+|---|---|---|---|---|
+| 1.0.0  | 3000000 | 425 ns | 192 | 3 |
+| 2.0.0  | 5000000 | 260 ns | 64 | 3 |
+
+#### Int
+
+| version | requests | /op | B/op | allocs/op |
+|---|---|---|---|---|
+| 1.0.0  | 5000000 | 265 ns | 192 | 3 |
+| 2.0.0  | 20000000 | 70.5 ns | 16 | 2 |
+
+#### String (small)
+
+| version | requests | /op | B/op | allocs/op |
+|---|---|---|---|---|
+| 1.0.0  | 3000000 | 382 ns | 200 | 3 |
+| 2.0.0  | 20000000 | 89.0 ns | 128 | 2 |
+
+#### String (Large)
+
+| version | requests | /op | B/op | allocs/op |
+|---|---|---|---|---|
+| 1.0.0  | 1000000 | 1056 ns | 776 | 4 |
+| 2.0.0  | 5000000 | 237 ns | 896 | 2 |
+
+#### Time
+
+| version | requests | /op | B/op | allocs/op |
+|---|---|---|---|---|
+| 1.0.0  | 1000000 | 1122 ns | 360 | 5 |
+| 2.0.0  | 3000000 | 401 ns | 48 | 1 |
+
+#### TimestampMS
+
+| version | requests | /op | B/op | allocs/op |
+|---|---|---|---|---|
+| 1.0.0  | 20000000 | 97.9 ns | 32 | 2 |
+| 2.0.0  | 20000000 | 91.2 ns | 32 | 2 |
+
+#### TimestampNano
+
+| version | requests | /op | B/op | allocs/op |
+|---|---|---|---|---|
+| 1.0.0  | 10000000 | 114 ns | 64 | 2 |
+| 2.0.0  | 20000000 | 112 ns | 64 | 2 |
+
+#### Timestamp
+
+| version | requests | /op | B/op | allocs/op |
+|---|---|---|---|---|
+| 1.0.0  | 20000000 | 88.4 ns | 32 | 2 |
+| 2.0.0  | 20000000 | 86.7 ns | 32 | 2 |
+
+#### Uint
+
+| version | requests | /op | B/op | allocs/op |
+|---|---|---|---|---|
+| 1.0.0  | 5000000 | 277 ns | 192 | 3 |
+| 2.0.0  | 20000000 | 64.2 ns | 16 | 2 |
+
 ## Licence
 
 [MIT](https://github.com/usk81/generic/blob/master/LICENSE)
