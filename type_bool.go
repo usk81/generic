@@ -45,7 +45,10 @@ func (v Bool) MarshalJSON() ([]byte, error) {
 	if !v.Valid() {
 		return nullBytes, nil
 	}
-	return map[bool][]byte{true: []byte("true"), false: []byte("false")}[v.Bool], nil
+	if v.Bool {
+		return []byte("true"), nil
+	}
+	return []byte("false"), nil
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
