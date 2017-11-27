@@ -193,7 +193,7 @@ func asTime(x interface{}) (result time.Time, isValid ValidFlag, err error) {
 	case time.Time:
 		result = x.(time.Time)
 		if result.IsZero() {
-			return result, false, nil
+			return result, true, nil
 		}
 	default:
 		return result, false, ErrInvalidGenericValue{Value: x}
@@ -210,7 +210,7 @@ func asTimestamp(x interface{}) (result time.Time, isValid ValidFlag, err error)
 	case time.Time:
 		result = x.(time.Time)
 		if result.IsZero() {
-			return result, false, nil
+			return result, true, nil
 		}
 		return result, true, nil
 	case int:
@@ -255,7 +255,7 @@ func asTimestampNanoseconds(x interface{}) (result time.Time, isValid ValidFlag,
 	case time.Time:
 		result = x.(time.Time)
 		if result.IsZero() {
-			return result, false, nil
+			return result, true, nil
 		}
 		return result, true, nil
 	case int:
@@ -300,7 +300,7 @@ func asTimestampMilliseconds(x interface{}) (result time.Time, isValid ValidFlag
 	case time.Time:
 		result = x.(time.Time)
 		if result.IsZero() {
-			return result, false, nil
+			return result, true, nil
 		}
 		return result, true, nil
 	case int:
