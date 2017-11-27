@@ -2,7 +2,6 @@ package generic
 
 import (
 	"database/sql/driver"
-	"encoding/json"
 	"time"
 )
 
@@ -46,7 +45,7 @@ func (v Time) MarshalJSON() ([]byte, error) {
 	if !v.Valid() {
 		return nullBytes, nil
 	}
-	return json.Marshal(v.Time)
+	return v.Time.MarshalJSON()
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
@@ -54,9 +53,14 @@ func (v *Time) UnmarshalJSON(data []byte) error {
 	if data == nil || len(data) == 0 {
 		return nil
 	}
-	var in interface{}
-	if err := json.Unmarshal(data, &in); err != nil {
+	if err := v.Time.UnmarshalJSON(data); err != nil {
 		return err
 	}
-	return v.Scan(in)
+	v.ValidFlag = true
+	return nil
+	// var in interface{}
+	// if err := json.Unmarshal(data, &in); err != nil {
+	// 	return err
+	// }
+	// return v.Scan(in)
 }
