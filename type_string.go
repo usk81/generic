@@ -45,7 +45,9 @@ func (v String) MarshalJSON() ([]byte, error) {
 	if !v.Valid() {
 		return nullBytes, nil
 	}
-	return json.Marshal(v.String)
+	s := `"` + v.String + `"`
+	bs := make([]byte, 0, len(s))
+	return append(bs, s...), nil
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
