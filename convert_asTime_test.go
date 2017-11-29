@@ -11,7 +11,7 @@ func TestAsTimeTime(t *testing.T) {
 	if err != nil {
 		t.Errorf("Not Expected error. error:%s", err.Error())
 	}
-	if v == false {
+	if !v {
 		t.Error("expected: true, actual: false")
 	}
 	if s := r.String(); s != "2020-07-24 20:00:00 +0900 Asia/Tokyo" {
@@ -25,7 +25,7 @@ func TestAsTimeZero(t *testing.T) {
 	if err != nil {
 		t.Errorf("Not Expected error. error:%s", err.Error())
 	}
-	if v == false {
+	if !v {
 		t.Error("expected: true, actual: false")
 	}
 	if !r.IsZero() {

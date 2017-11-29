@@ -53,7 +53,7 @@ func (v Bool) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
 func (v *Bool) UnmarshalJSON(data []byte) error {
-	if data == nil || len(data) == 0 {
+	if len(data) == 0 {
 		return nil
 	}
 	var in interface{}

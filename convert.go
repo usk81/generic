@@ -128,7 +128,7 @@ func asInt(x interface{}) (result int64, isValid ValidFlag, err error) {
 		result = int64(x.(float64))
 	case bool:
 		b := x.(bool)
-		if b == true {
+		if b {
 			result = 1
 		} else {
 			result = 0

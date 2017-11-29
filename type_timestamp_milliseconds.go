@@ -45,7 +45,7 @@ func (v TimestampMS) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
 func (v *TimestampMS) UnmarshalJSON(data []byte) error {
-	if data == nil || len(data) == 0 {
+	if len(data) == 0 {
 		return nil
 	}
 	var in interface{}

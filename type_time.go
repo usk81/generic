@@ -50,7 +50,7 @@ func (v Time) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
 func (v *Time) UnmarshalJSON(data []byte) error {
-	if data == nil || len(data) == 0 {
+	if len(data) == 0 {
 		return nil
 	}
 	if err := v.Time.UnmarshalJSON(data); err != nil {
@@ -58,9 +58,4 @@ func (v *Time) UnmarshalJSON(data []byte) error {
 	}
 	v.ValidFlag = true
 	return nil
-	// var in interface{}
-	// if err := json.Unmarshal(data, &in); err != nil {
-	// 	return err
-	// }
-	// return v.Scan(in)
 }
