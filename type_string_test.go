@@ -32,6 +32,30 @@ func TestStringJsonUnmarshalAndMarshal(t *testing.T) {
 	}
 }
 
+func TestStringUnmarshalNil(t *testing.T) {
+	var actual String
+	expected := String{}
+	err := actual.UnmarshalJSON(nil)
+	if err != nil {
+		t.Errorf("Not Expected error when json.Unmarshal. error:%s", err.Error())
+	}
+	if actual != expected {
+		t.Errorf("actual:%#v, expected:%#v", actual, expected)
+	}
+}
+
+func TestStringUnmarshalNull(t *testing.T) {
+	var actual String
+	expected := String{}
+	err := actual.UnmarshalJSON([]byte("null"))
+	if err != nil {
+		t.Errorf("Not Expected error when json.Unmarshal. error:%s", err.Error())
+	}
+	if actual != expected {
+		t.Errorf("actual:%#v, expected:%#v", actual, expected)
+	}
+}
+
 func TestStringSetNil(t *testing.T) {
 	ts := String{}
 	err := ts.Set(nil)
@@ -79,5 +103,26 @@ func TestStringSetBool(t *testing.T) {
 	}
 	if ts.Weak() != expected {
 		t.Errorf("actual:%v, expected:%v", ts.Weak(), expected)
+	}
+}
+
+func TestString(t *testing.T) {
+	expected := "vcrtyhjki876tfdews"
+	ts := String{
+		ValidFlag: true,
+		string:    expected,
+	}
+	if ts.String() != expected {
+		t.Errorf("actual:%s, expected:%s", ts.String(), expected)
+	}
+}
+
+func TestStringInvalid(t *testing.T) {
+	ts := String{
+		ValidFlag: false,
+		string:    "vcrtyhjki876tfdews",
+	}
+	if ts.String() != "" {
+		t.Errorf("actual:%s, expected: (empty)", ts.String())
 	}
 }

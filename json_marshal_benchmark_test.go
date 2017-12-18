@@ -8,7 +8,7 @@ import (
 func BenchmarkMarshalJSONBool(b *testing.B) {
 	x := Bool{
 		ValidFlag: true,
-		Bool:      true,
+		bool:      true,
 	}
 	for i := 0; i < b.N; i++ {
 		x.MarshalJSON()
@@ -18,7 +18,7 @@ func BenchmarkMarshalJSONBool(b *testing.B) {
 func BenchmarkMarshalJSONFloat(b *testing.B) {
 	x := Float{
 		ValidFlag: true,
-		Float:     1000.000001,
+		float:     1000.000001,
 	}
 	for i := 0; i < b.N; i++ {
 		x.MarshalJSON()
@@ -28,7 +28,7 @@ func BenchmarkMarshalJSONFloat(b *testing.B) {
 func BenchmarkMarshalJSONInt(b *testing.B) {
 	x := Int{
 		ValidFlag: true,
-		Int:       10000,
+		int:       10000,
 	}
 	for i := 0; i < b.N; i++ {
 		x.MarshalJSON()
@@ -38,7 +38,7 @@ func BenchmarkMarshalJSONInt(b *testing.B) {
 func BenchmarkMarshalJSONString(b *testing.B) {
 	x := String{
 		ValidFlag: true,
-		String:    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+		string:    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
 	}
 	for i := 0; i < b.N; i++ {
 		x.MarshalJSON()
@@ -48,7 +48,7 @@ func BenchmarkMarshalJSONString(b *testing.B) {
 func BenchmarkMarshalJSONStringLarge(b *testing.B) {
 	x := String{
 		ValidFlag: true,
-		String:    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+		string:    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 	}
 	for i := 0; i < b.N; i++ {
 		x.MarshalJSON()
@@ -58,7 +58,7 @@ func BenchmarkMarshalJSONStringLarge(b *testing.B) {
 func BenchmarkMarshalJSONTime(b *testing.B) {
 	x := Time{
 		ValidFlag: true,
-		Time:      time.Now(),
+		time:      time.Now(),
 	}
 	for i := 0; i < b.N; i++ {
 		x.MarshalJSON()
@@ -68,7 +68,7 @@ func BenchmarkMarshalJSONTime(b *testing.B) {
 func BenchmarkMarshalJSONTimestampMS(b *testing.B) {
 	x := TimestampMS{
 		ValidFlag: true,
-		Time:      time.Now(),
+		time:      time.Now(),
 	}
 	for i := 0; i < b.N; i++ {
 		x.MarshalJSON()
@@ -98,7 +98,7 @@ func BenchmarkMarshalJSONTimestamp(b *testing.B) {
 func BenchmarkMarshalJSONUint(b *testing.B) {
 	x := Uint{
 		ValidFlag: true,
-		Uint:      10000,
+		uint:      10000,
 	}
 	for i := 0; i < b.N; i++ {
 		x.MarshalJSON()

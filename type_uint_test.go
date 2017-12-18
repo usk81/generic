@@ -98,3 +98,85 @@ func TestUintSetNonNumericString(t *testing.T) {
 		t.Errorf("This value should return 0. value:%#v", tu.Weak())
 	}
 }
+
+func TestUintUint(t *testing.T) {
+	var expected uint = 123456789
+	ti := Uint{
+		ValidFlag: true,
+		uint:      uint64(expected),
+	}
+	if ti.Uint() != expected {
+		t.Errorf("actual:%d, expected:%d", ti.Uint(), expected)
+	}
+}
+
+func TestUintUintInvalid(t *testing.T) {
+	ti := Uint{
+		ValidFlag: false,
+		uint:      123456789,
+	}
+	if ti.Uint() != 0 {
+		t.Errorf("actual:%d, expected:0", ti.Uint())
+	}
+}
+
+func TestUintUint32(t *testing.T) {
+	var expected uint32 = 123456789
+	ti := Uint{
+		ValidFlag: true,
+		uint:      uint64(expected),
+	}
+	if ti.Uint32() != expected {
+		t.Errorf("actual:%d, expected:%d", ti.Uint32(), expected)
+	}
+}
+
+func TestUintUint32Invalid(t *testing.T) {
+	ti := Uint{
+		ValidFlag: false,
+		uint:      123456789,
+	}
+	if ti.Uint32() != 0 {
+		t.Errorf("actual:%d, expected:0", ti.Uint32())
+	}
+}
+
+func TestUintUint64(t *testing.T) {
+	var expected uint64 = 123456789
+	ti := Uint{
+		ValidFlag: true,
+		uint:      expected,
+	}
+	if ti.Uint64() != expected {
+		t.Errorf("actual:%d, expected:%d", ti.Uint64(), expected)
+	}
+}
+
+func TestUintUint64Invalid(t *testing.T) {
+	ti := Uint{
+		ValidFlag: false,
+		uint:      123456789,
+	}
+	if ti.Uint64() != 0 {
+		t.Errorf("actual:%d, expected:0", ti.Uint64())
+	}
+}
+
+func TestUintString(t *testing.T) {
+	var expected = "123456789"
+	ti := Uint{}
+	ti.Set(expected)
+	if ti.String() != expected {
+		t.Errorf("actual:%s, expected:%s", ti.String(), expected)
+	}
+}
+
+func TestUintStringInvalid(t *testing.T) {
+	ti := Uint{
+		ValidFlag: false,
+		uint:      123456789,
+	}
+	if ti.String() != "" {
+		t.Errorf("expected empty string, actual:%s", ti.String())
+	}
+}

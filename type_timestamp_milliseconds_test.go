@@ -1,9 +1,25 @@
 package generic
 
 import (
+	"encoding/json"
 	"testing"
 	"time"
 )
+
+func TestTimestampJsonMarshalValidFalse(t *testing.T) {
+	tm := TimestampMS{
+		ValidFlag: false,
+		time:      time.Now(),
+	}
+	expected := []byte("null")
+	actual, err := json.Marshal(tm)
+	if err != nil {
+		t.Errorf("Not Expected error when json.Marshal. error:%v", err.Error())
+	}
+	if string(actual) != string(expected) {
+		t.Errorf("actual:%v, expected:%v", actual, expected)
+	}
+}
 
 func TestTimestampMSSetNil(t *testing.T) {
 	tm := TimestampMS{}

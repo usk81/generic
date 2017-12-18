@@ -49,6 +49,18 @@ func TestBoolJsonError(t *testing.T) {
 	}
 }
 
+func TestBoolUnmarshalNil(t *testing.T) {
+	var actual Bool
+	expected := Bool{}
+	err := actual.UnmarshalJSON(nil)
+	if err != nil {
+		t.Errorf("Not Expected error when json.Unmarshal. error:%s", err.Error())
+	}
+	if actual != expected {
+		t.Errorf("actual:%#v, expected:%#v", actual, expected)
+	}
+}
+
 func TestBoolSetNil(t *testing.T) {
 	ts := Bool{}
 	err := ts.Set(nil)
@@ -83,5 +95,65 @@ func TestBoolSetString(t *testing.T) {
 	}
 	if ts.Weak() != expected {
 		t.Errorf("actual:%v, expected:%v", ts.Weak(), expected)
+	}
+}
+
+func TestBoolTrue(t *testing.T) {
+	ts := Bool{
+		ValidFlag: true,
+		bool:      true,
+	}
+	if !ts.Bool() {
+		t.Errorf("actual:%v, expected:true", ts.Bool())
+	}
+}
+
+func TestBoolFalse(t *testing.T) {
+	ts := Bool{
+		ValidFlag: true,
+		bool:      false,
+	}
+	if ts.Bool() {
+		t.Errorf("actual:%v, expected:false", ts.Bool())
+	}
+}
+
+func TestBoolInvalid(t *testing.T) {
+	ts := Bool{
+		ValidFlag: false,
+		bool:      true,
+	}
+	if ts.Bool() {
+		t.Errorf("actual:%v, expected:false", ts.Bool())
+	}
+}
+
+func TestBoolStringTrue(t *testing.T) {
+	ts := Bool{
+		ValidFlag: true,
+		bool:      true,
+	}
+	if ts.String() != "true" {
+		t.Errorf("actual:%s, expected:true", ts.String())
+	}
+}
+
+func TestBoolStringFalse(t *testing.T) {
+	ts := Bool{
+		ValidFlag: true,
+		bool:      false,
+	}
+	if ts.String() != "false" {
+		t.Errorf("actual:%s, expected:false", ts.String())
+	}
+}
+
+func TestBoolStringInvalid(t *testing.T) {
+	ts := Bool{
+		ValidFlag: false,
+		bool:      true,
+	}
+	if ts.String() != "false" {
+		t.Errorf("actual:%s, expected:false", ts.String())
 	}
 }

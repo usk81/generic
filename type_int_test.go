@@ -35,7 +35,7 @@ func TestIntJsonUnmarshalAndMarshal(t *testing.T) {
 func TestIntJsonMarshal(t *testing.T) {
 	ts := Int{
 		ValidFlag: true,
-		Int:       1000,
+		int:       1000,
 	}
 	expected := `1000`
 	actual, err := json.Marshal(ts)
@@ -50,7 +50,7 @@ func TestIntJsonMarshal(t *testing.T) {
 func TestIntJsonMarshalValidFalse(t *testing.T) {
 	ts := Int{
 		ValidFlag: false,
-		Int:       1000,
+		int:       1000,
 	}
 	expected := []byte("null")
 	actual, err := json.Marshal(ts)
@@ -65,7 +65,7 @@ func TestIntJsonMarshalValidFalse(t *testing.T) {
 func TestIntJsonMarshalZero(t *testing.T) {
 	ts := Int{
 		ValidFlag: true,
-		Int:       0,
+		int:       0,
 	}
 	expected := `0`
 	actual, err := json.Marshal(ts)
@@ -82,27 +82,27 @@ func TestIntJsonUnmarshal(t *testing.T) {
 	expected := TestIntStruct{
 		Int: Int{
 			ValidFlag: true,
-			Int:       10,
+			int:       10,
 		},
 		Float: Int{
 			ValidFlag: true,
-			Int:       1,
+			int:       1,
 		},
 		Bool: Int{
 			ValidFlag: true,
-			Int:       1,
+			int:       1,
 		},
 		String: Int{
 			ValidFlag: true,
-			Int:       -50,
+			int:       -50,
 		},
 		NullValue: Int{
 			ValidFlag: false,
-			Int:       0,
+			int:       0,
 		},
 		Empty: Int{
 			ValidFlag: false,
-			Int:       0,
+			int:       0,
 		},
 	}
 	var actual TestIntStruct
@@ -200,5 +200,87 @@ func TestIntSetNonNumericString(t *testing.T) {
 	}
 	if ti.Weak() == expected {
 		t.Errorf("This value should return 0. value:%#v", ti.Weak())
+	}
+}
+
+func TestIntInt(t *testing.T) {
+	expected := 123456789
+	ti := Int{
+		ValidFlag: true,
+		int:       int64(expected),
+	}
+	if ti.Int() != expected {
+		t.Errorf("actual:%d, expected:%d", ti.Int(), expected)
+	}
+}
+
+func TestIntIntInvalid(t *testing.T) {
+	ti := Int{
+		ValidFlag: false,
+		int:       123456789,
+	}
+	if ti.Int() != 0 {
+		t.Errorf("actual:%d, expected:0", ti.Int())
+	}
+}
+
+func TestIntInt32(t *testing.T) {
+	var expected int32 = 123456789
+	ti := Int{
+		ValidFlag: true,
+		int:       int64(expected),
+	}
+	if ti.Int32() != expected {
+		t.Errorf("actual:%d, expected:%d", ti.Int32(), expected)
+	}
+}
+
+func TestIntInt32Invalid(t *testing.T) {
+	ti := Int{
+		ValidFlag: false,
+		int:       123456789,
+	}
+	if ti.Int32() != 0 {
+		t.Errorf("actual:%d, expected:0", ti.Int32())
+	}
+}
+
+func TestIntInt64(t *testing.T) {
+	var expected int64 = 123456789
+	ti := Int{
+		ValidFlag: true,
+		int:       expected,
+	}
+	if ti.Int64() != expected {
+		t.Errorf("actual:%d, expected:%d", ti.Int64(), expected)
+	}
+}
+
+func TestIntInt64Invalid(t *testing.T) {
+	ti := Int{
+		ValidFlag: false,
+		int:       123456789,
+	}
+	if ti.Int64() != 0 {
+		t.Errorf("actual:%d, expected:0", ti.Int64())
+	}
+}
+
+func TestIntString(t *testing.T) {
+	var expected = "123456789"
+	ti := Int{}
+	ti.Set(expected)
+	if ti.String() != expected {
+		t.Errorf("actual:%s, expected:%s", ti.String(), expected)
+	}
+}
+
+func TestIntStringInvalid(t *testing.T) {
+	ti := Int{
+		ValidFlag: false,
+		int:       123456789,
+	}
+	if ti.String() != "" {
+		t.Errorf("expected empty string, actual:%s", ti.String())
 	}
 }
