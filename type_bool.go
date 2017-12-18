@@ -8,7 +8,7 @@ import (
 // Bool is generic boolean type structure
 type Bool struct {
 	ValidFlag
-	Bool bool
+	bool bool
 }
 
 // Value implements the driver Valuer interface.
@@ -16,12 +16,12 @@ func (v Bool) Value() (driver.Value, error) {
 	if !v.Valid() {
 		return nil, nil
 	}
-	return v.Bool, nil
+	return v.bool, nil
 }
 
 // Scan implements the sql.Scanner interface.
 func (v *Bool) Scan(x interface{}) (err error) {
-	v.Bool, v.ValidFlag, err = asBool(x)
+	v.bool, v.ValidFlag, err = asBool(x)
 	if err != nil {
 		v.ValidFlag = false
 		return err
@@ -40,12 +40,28 @@ func (v *Bool) Set(x interface{}) (err error) {
 	return v.Scan(x)
 }
 
+// Bool returns bool value
+func (v Bool) Bool() bool {
+	if v.Valid() && v.bool {
+		return true
+	}
+	return false
+}
+
+// String implements the Stringer interface.
+func (v Bool) String() string {
+	if v.Valid() && v.bool {
+		return "true"
+	}
+	return "false"
+}
+
 // MarshalJSON implements the json.Marshaler interface.
 func (v Bool) MarshalJSON() ([]byte, error) {
 	if !v.Valid() {
 		return nullBytes, nil
 	}
-	if v.Bool {
+	if v.bool {
 		return []byte("true"), nil
 	}
 	return []byte("false"), nil

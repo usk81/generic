@@ -9,7 +9,7 @@ import (
 // TimestampMS is a wrapped time type structure
 type TimestampMS struct {
 	ValidFlag
-	Time time.Time
+	time time.Time
 }
 
 // Value returns Time.Time, but if Time.ValidFlag is false, returns nil.
@@ -17,12 +17,12 @@ func (v TimestampMS) Value() interface{} {
 	if !v.Valid() {
 		return nil
 	}
-	return v.Time
+	return v.time
 }
 
 // Scan implements the sql.Scanner interface.
 func (v *TimestampMS) Scan(x interface{}) (err error) {
-	v.Time, v.ValidFlag, err = asTimestampMilliseconds(x)
+	v.time, v.ValidFlag, err = asTimestampMilliseconds(x)
 	if err != nil {
 		v.ValidFlag = false
 		return err
@@ -40,7 +40,7 @@ func (v TimestampMS) MarshalJSON() ([]byte, error) {
 	if !v.Valid() {
 		return nullBytes, nil
 	}
-	return []byte(strconv.FormatInt(v.Time.UnixNano()/1000000, 10)), nil
+	return []byte(strconv.FormatInt(v.time.UnixNano()/1000000, 10)), nil
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.

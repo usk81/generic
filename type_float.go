@@ -9,7 +9,7 @@ import (
 // Float is generic float type structure
 type Float struct {
 	ValidFlag
-	Float float64
+	float float64
 }
 
 // Value implements the driver Valuer interface.
@@ -17,12 +17,12 @@ func (v Float) Value() (driver.Value, error) {
 	if !v.Valid() {
 		return nil, nil
 	}
-	return v.Float, nil
+	return v.float, nil
 }
 
 // Scan implements the sql.Scanner interface.
 func (v *Float) Scan(x interface{}) (err error) {
-	v.Float, v.ValidFlag, err = asFloat(x)
+	v.float, v.ValidFlag, err = asFloat(x)
 	if err != nil {
 		v.ValidFlag = false
 		return err
@@ -41,12 +41,33 @@ func (v *Float) Set(x interface{}) (err error) {
 	return v.Scan(x)
 }
 
+// Float32 returns float32 value
+func (v Float) Float32() float32 {
+	return float32(v.Float64())
+}
+
+// Float64 returns float64 value
+func (v Float) Float64() float64 {
+	if !v.Valid() {
+		return 0
+	}
+	return v.float
+}
+
+// String implements the Stringer interface.
+func (v Float) String() string {
+	if !v.Valid() {
+		return ""
+	}
+	return strconv.FormatFloat(v.float, 'f', -1, 64)
+}
+
 // MarshalJSON implements the json.Marshaler interface.
 func (v Float) MarshalJSON() ([]byte, error) {
 	if !v.Valid() {
 		return nullBytes, nil
 	}
-	return []byte(strconv.FormatFloat(v.Float, 'f', -1, 64)), nil
+	return []byte(strconv.FormatFloat(v.float, 'f', -1, 64)), nil
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.

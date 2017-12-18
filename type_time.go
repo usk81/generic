@@ -8,7 +8,7 @@ import (
 // Time is generic time type structure
 type Time struct {
 	ValidFlag
-	Time time.Time
+	time time.Time
 }
 
 // Value implements the driver Valuer interface.
@@ -16,12 +16,12 @@ func (v Time) Value() (driver.Value, error) {
 	if !v.Valid() {
 		return nil, nil
 	}
-	return v.Time, nil
+	return v.time, nil
 }
 
 // Scan implements the sql.Scanner interface.
 func (v *Time) Scan(x interface{}) (err error) {
-	v.Time, v.ValidFlag, err = asTime(x)
+	v.time, v.ValidFlag, err = asTime(x)
 	if err != nil {
 		v.ValidFlag = false
 		return err
@@ -40,12 +40,20 @@ func (v *Time) Set(x interface{}) (err error) {
 	return v.Scan(x)
 }
 
+// String implements the Stringer interface.
+func (v Time) String() string {
+	if !v.Valid() {
+		return ""
+	}
+	return v.time.String()
+}
+
 // MarshalJSON implements the json.Marshaler interface.
 func (v Time) MarshalJSON() ([]byte, error) {
 	if !v.Valid() {
 		return nullBytes, nil
 	}
-	return v.Time.MarshalJSON()
+	return v.time.MarshalJSON()
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
@@ -53,7 +61,7 @@ func (v *Time) UnmarshalJSON(data []byte) error {
 	if len(data) == 0 {
 		return nil
 	}
-	if err := v.Time.UnmarshalJSON(data); err != nil {
+	if err := v.time.UnmarshalJSON(data); err != nil {
 		return err
 	}
 	v.ValidFlag = true
