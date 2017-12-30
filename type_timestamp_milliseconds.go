@@ -1,6 +1,7 @@
 package generic
 
 import (
+	"database/sql/driver"
 	"encoding/json"
 	"strconv"
 	"time"
@@ -12,12 +13,12 @@ type TimestampMS struct {
 	time time.Time
 }
 
-// Value returns Time.Time, but if Time.ValidFlag is false, returns nil.
-func (v TimestampMS) Value() interface{} {
+// Value returns Time.Time, but if TimestampMS.ValidFlag is false, returns nil.
+func (v TimestampMS) Value() (driver.Value, error) {
 	if !v.Valid() {
-		return nil
+		return nil, nil
 	}
-	return v.time
+	return v.time.UnixNano() / 1000000, nil
 }
 
 // Scan implements the sql.Scanner interface.
@@ -30,9 +31,33 @@ func (v *TimestampMS) Scan(x interface{}) (err error) {
 	return
 }
 
+// Weak returns timestamp int value, but if TimestampMS.ValidFlag is false, returns nil.
+func (v TimestampMS) Weak() interface{} {
+	i, _ := v.Value()
+	return i
+}
+
 // Set sets a specified value.
 func (v *TimestampMS) Set(x interface{}) (err error) {
 	return v.Scan(x)
+}
+
+// String implements the Stringer interface.
+func (v TimestampMS) String() string {
+	return strconv.FormatInt(v.Int64(), 10)
+}
+
+// Int return int value
+func (v TimestampMS) Int() int {
+	return int(v.Int64())
+}
+
+// Int64 return int64 value
+func (v TimestampMS) Int64() int64 {
+	if !v.Valid() || v.time.UnixNano() == 0 {
+		return 0
+	}
+	return v.time.UnixNano() / 1000000
 }
 
 // MarshalJSON implements the json.Marshaler interface.
@@ -40,7 +65,7 @@ func (v TimestampMS) MarshalJSON() ([]byte, error) {
 	if !v.Valid() {
 		return nullBytes, nil
 	}
-	return []byte(strconv.FormatInt(v.time.UnixNano()/1000000, 10)), nil
+	return []byte(v.String()), nil
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
