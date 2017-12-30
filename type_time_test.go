@@ -37,14 +37,42 @@ func TestTimeJsonMarshalValidFalse(t *testing.T) {
 	}
 }
 
+func TestTimeJsonUnmarshal(t *testing.T) {
+	v := time.Now()
+	in, _ := v.MarshalJSON()
+	tt := Time{}
+	if err := tt.UnmarshalJSON(in); err != nil {
+		t.Errorf("Not Expected error when json.Unmarshal. error:%v", err.Error())
+	}
+	if !tt.Valid() {
+		t.Error("ValidFlag should be TRUE")
+	}
+	if tt.Time() != v {
+		t.Errorf("actual:%v, expected:%v", tt.Time(), v)
+	}
+}
+
+func TestTimeJsonUnmarshalNil(t *testing.T) {
+	tt := Time{}
+	if err := tt.UnmarshalJSON(nil); err != nil {
+		t.Errorf("Not Expected error when json.Unmarshal. error:%v", err.Error())
+	}
+	if tt.Valid() {
+		t.Error("ValidFlag should be FALSE")
+	}
+	if tt.Time() != time.Unix(0, 0) {
+		t.Errorf("actual:%v, expected:%v", tt.Time(), time.Unix(0, 0))
+	}
+}
+
 func TestTimeSetNil(t *testing.T) {
 	tt := Time{}
 	err := tt.Set(nil)
 	if err != nil {
-		t.Errorf("Not Expected error. error:%v", err.Error())
+		t.Errorf("Not Expected error. error:%s", err.Error())
 	}
-	if tt.Weak() != nil {
-		t.Errorf("This value should return nil. error:%#v", tt.Weak())
+	if _, err = tt.Value(); err != nil {
+		t.Errorf("This value should return nil. error:%s", err.Error())
 	}
 }
 

@@ -48,6 +48,14 @@ func (v Time) String() string {
 	return v.time.String()
 }
 
+// Time returns value as time.Time
+func (v Time) Time() time.Time {
+	if !v.Valid() {
+		return time.Unix(0, 0)
+	}
+	return v.time
+}
+
 // MarshalJSON implements the json.Marshaler interface.
 func (v Time) MarshalJSON() ([]byte, error) {
 	if !v.Valid() {
