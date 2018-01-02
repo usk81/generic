@@ -47,7 +47,7 @@ func TestTimeJsonUnmarshal(t *testing.T) {
 	if !tt.Valid() {
 		t.Error("ValidFlag should be TRUE")
 	}
-	if tt.Time() != v {
+	if tt.Time().String() != v.String() {
 		t.Errorf("actual:%v, expected:%v", tt.Time(), v)
 	}
 }
