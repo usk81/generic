@@ -1,6 +1,9 @@
 package generic
 
-import "testing"
+import (
+	"testing"
+	"time"
+)
 
 func BenchmarkUnmarshalJSONBoolFromBool(b *testing.B) {
 	unmarshalJSONBoolBenchmark(b, []byte(`true`))
@@ -70,6 +73,11 @@ func BenchmarkUnmarshalJSONStringFromString(b *testing.B) {
 	unmarshalJSONStringBenchmark(b, []byte(`"true"`))
 }
 
+func BenchmarkUnmarshalJSONTimeFromString(b *testing.B) {
+	now := time.Now()
+	unmarshalJSONTimeBenchmark(b, []byte(`"`+now.String()+`"`))
+}
+
 func unmarshalJSONBoolBenchmark(b *testing.B, bs []byte) {
 	x := Bool{}
 	for i := 0; i < b.N; i++ {
@@ -95,6 +103,13 @@ func unmarshalJSONStringBenchmark(b *testing.B, bs []byte) {
 	x := String{}
 	for i := 0; i < b.N; i++ {
 		x.UnmarshalJSON(bs)
+	}
+}
+
+func unmarshalJSONTimeBenchmark(b *testing.B, bs []byte) {
+	t := Time{}
+	for i := 0; i < b.N; i++ {
+		t.UnmarshalJSON(bs)
 	}
 }
 
