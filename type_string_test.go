@@ -10,13 +10,14 @@ type TestStringStruct struct {
 	Float     String `json:"float"`
 	Bool      String `json:"bool"`
 	String    String `json:"string"`
+	HTML      String `json:"html"`
 	NullValue String `json:"null_value"`
 }
 
 func TestStringJsonUnmarshalAndMarshal(t *testing.T) {
 	var ts TestStringStruct
-	jstr := `{"int":10,"float":1.1,"bool":false,"string":"qwertyuiopkjhgv876","null_value":null}`
-	expected := `{"int":"10","float":"1.1","bool":"false","string":"qwertyuiopkjhgv876","null_value":null}`
+	jstr := `{"int":10,"float":1.1,"bool":false,"string":"qwertyuiopkjhgv876","html":"https://golang.org/src/encoding/json/encode.go?h=float64Encoder&foo=bar#L409","null_value":null}`
+	expected := `{"int":"10","float":"1.1","bool":"false","string":"qwertyuiopkjhgv876","html":"https://golang.org/src/encoding/json/encode.go?h=float64Encoder\u0026foo=bar#L409","null_value":null}`
 	err := json.Unmarshal([]byte(jstr), &ts)
 	if err != nil {
 		t.Errorf("Not Expected error when json.Unmarshal. error:%v", err.Error())
@@ -31,14 +32,38 @@ func TestStringJsonUnmarshalAndMarshal(t *testing.T) {
 	}
 }
 
+func TestStringUnmarshalNil(t *testing.T) {
+	var actual String
+	expected := String{}
+	err := actual.UnmarshalJSON(nil)
+	if err != nil {
+		t.Errorf("Not Expected error when json.Unmarshal. error:%s", err.Error())
+	}
+	if actual != expected {
+		t.Errorf("actual:%#v, expected:%#v", actual, expected)
+	}
+}
+
+func TestStringUnmarshalNull(t *testing.T) {
+	var actual String
+	expected := String{}
+	err := actual.UnmarshalJSON([]byte("null"))
+	if err != nil {
+		t.Errorf("Not Expected error when json.Unmarshal. error:%s", err.Error())
+	}
+	if actual != expected {
+		t.Errorf("actual:%#v, expected:%#v", actual, expected)
+	}
+}
+
 func TestStringSetNil(t *testing.T) {
 	ts := String{}
 	err := ts.Set(nil)
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
 	}
-	if ts.Value() != nil {
-		t.Errorf("This value should return nil. error:%#v", ts.Value())
+	if ts.Weak() != nil {
+		t.Errorf("This value should return nil. error:%#v", ts.Weak())
 	}
 }
 
@@ -50,8 +75,8 @@ func TestStringSetInt64(t *testing.T) {
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
 	}
-	if ts.Value() != expected {
-		t.Errorf("actual:%v, expected:%v", ts.Value(), expected)
+	if ts.Weak() != expected {
+		t.Errorf("actual:%v, expected:%v", ts.Weak(), expected)
 	}
 }
 
@@ -63,8 +88,8 @@ func TestStringSetString(t *testing.T) {
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
 	}
-	if ts.Value() != expected {
-		t.Errorf("actual:%v, expected:%v", ts.Value(), expected)
+	if ts.Weak() != expected {
+		t.Errorf("actual:%v, expected:%v", ts.Weak(), expected)
 	}
 }
 
@@ -76,7 +101,28 @@ func TestStringSetBool(t *testing.T) {
 	if err != nil {
 		t.Errorf("Not Expected error. error:%v", err.Error())
 	}
-	if ts.Value() != expected {
-		t.Errorf("actual:%v, expected:%v", ts.Value(), expected)
+	if ts.Weak() != expected {
+		t.Errorf("actual:%v, expected:%v", ts.Weak(), expected)
+	}
+}
+
+func TestString(t *testing.T) {
+	expected := "vcrtyhjki876tfdews"
+	ts := String{
+		ValidFlag: true,
+		string:    expected,
+	}
+	if ts.String() != expected {
+		t.Errorf("actual:%s, expected:%s", ts.String(), expected)
+	}
+}
+
+func TestStringInvalid(t *testing.T) {
+	ts := String{
+		ValidFlag: false,
+		string:    "vcrtyhjki876tfdews",
+	}
+	if ts.String() != "" {
+		t.Errorf("actual:%s, expected: (empty)", ts.String())
 	}
 }

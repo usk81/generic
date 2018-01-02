@@ -18,3 +18,11 @@ func TestErrInvalidGenericValueString(t *testing.T) {
 		t.Errorf("actual:%s, expected:%s", err.Error(), expected)
 	}
 }
+
+func TestValidFlagReset(t *testing.T) {
+	var v ValidFlag = true
+	v.Reset()
+	if v {
+		t.Error("actual:true, expected:false")
+	}
+}

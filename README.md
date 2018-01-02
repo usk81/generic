@@ -63,41 +63,115 @@ func main() {
 
 	var tb generic.Bool
 	tb.Set(v)
-	vb := tb.Value()
+	vb := tb.Weak()
 	fmt.Printf("%v, (%T)\n", vb, vb)
 	// true, (bool)
 
 	var tf generic.Float
 	tf.Set(v)
-	vf := tf.Value()
+	vf := tf.Weak()
 	fmt.Printf("%v, (%T)\n", vf, vf)
 	// 1, (float64)
 
 	var ti generic.Int
 	ti.Set(v)
-	vi := ti.Value()
+	vi := ti.Weak()
 	fmt.Printf("%v, (%T)\n", vi, vi)
 	// 1, (int64)
 
 	var ts generic.String
 	ts.Set(v)
-	vs := ts.Value()
+	vs := ts.Weak()
 	fmt.Printf("%v, (%T)\n", vs, vs)
 	// 1, (string)
 
 	var tt generic.Time
 	tt.Set(v)
-	vt := tt.Value()
+	vt := tt.Weak()
 	fmt.Printf("%v, (%T)\n", vt.UTC(), vt)
 	// 1970-01-01 09:00:01 +0900 JST, (time.Time)
 
 	var tu generic.Uint
 	tu.Set(v)
-	vu := tu.Value()
+	vu := tu.Weak()
 	fmt.Printf("%v, (%T)\n", vu, vu)
 	// 1, (uint64)
 }
 ```
+
+## Benchmarks
+
+### Marshal
+
+#### Bool
+
+| version | requests | /op | B/op | allocs/op |
+|---|---|---|---|---|
+| 1.0.0  | 5000000 | 240 ns | 185 | 3 |
+| 2.0.0  | 200000000 | 6.69 ns | 0 | 0 |
+
+#### Float
+
+| version | requests | /op | B/op | allocs/op |
+|---|---|---|---|---|
+| 1.0.0  | 3000000 | 425 ns | 192 | 3 |
+| 2.0.0  | 5000000 | 260 ns | 64 | 3 |
+
+#### Int
+
+| version | requests | /op | B/op | allocs/op |
+|---|---|---|---|---|
+| 1.0.0  | 5000000 | 265 ns | 192 | 3 |
+| 2.0.0  | 20000000 | 70.5 ns | 16 | 2 |
+
+#### String (small)
+
+| version | requests | /op | B/op | allocs/op |
+|---|---|---|---|---|
+| 1.0.0  | 3000000 | 382 ns | 200 | 3 |
+| 2.0.0  | 20000000 | 89.0 ns | 128 | 2 |
+
+#### String (Large)
+
+| version | requests | /op | B/op | allocs/op |
+|---|---|---|---|---|
+| 1.0.0  | 1000000 | 1056 ns | 776 | 4 |
+| 2.0.0  | 5000000 | 237 ns | 896 | 2 |
+
+#### Time
+
+| version | requests | /op | B/op | allocs/op |
+|---|---|---|---|---|
+| 1.0.0  | 1000000 | 1122 ns | 360 | 5 |
+| 2.0.0  | 3000000 | 401 ns | 48 | 1 |
+
+#### TimestampMS
+
+| version | requests | /op | B/op | allocs/op |
+|---|---|---|---|---|
+| 1.0.0  | 20000000 | 97.9 ns | 32 | 2 |
+| 2.0.0  | 20000000 | 91.2 ns | 32 | 2 |
+
+#### TimestampNano
+
+| version | requests | /op | B/op | allocs/op |
+|---|---|---|---|---|
+| 1.0.0  | 10000000 | 114 ns | 64 | 2 |
+| 2.0.0  | 10000000 | 112 ns | 64 | 2 |
+
+#### Timestamp
+
+| version | requests | /op | B/op | allocs/op |
+|---|---|---|---|---|
+| 1.0.0  | 20000000 | 88.4 ns | 32 | 2 |
+| 2.0.0  | 20000000 | 86.7 ns | 32 | 2 |
+
+#### Uint
+
+| version | requests | /op | B/op | allocs/op |
+|---|---|---|---|---|
+| 1.0.0  | 5000000 | 277 ns | 192 | 3 |
+| 2.0.0  | 20000000 | 64.2 ns | 16 | 2 |
 
 ## Licence
 

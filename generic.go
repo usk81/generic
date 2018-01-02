@@ -2,13 +2,14 @@ package generic
 
 import (
 	"bytes"
+	"database/sql/driver"
 	"reflect"
 )
 
-// GenericType is the interface used as the basis for generic types
-type GenericType interface {
+// Type is the interface used as the basis for generic types
+type Type interface {
 	Valid() bool
-	Value() interface{}
+	Value() (driver.Value, error)
 	Scan(interface{}) error
 	Set(interface{}) error
 	Reset()
@@ -19,20 +20,22 @@ type ErrInvalidGenericValue struct {
 	Value interface{}
 }
 
-// ValidFlag
+// ValidFlag is the flag to check that value is valid
 type ValidFlag bool
+
+var nullBytes = []byte("null")
 
 // Reset resets ValidFlag
 func (v *ValidFlag) Reset() {
 	*v = false
 }
 
-// Valid validates the specified value is nil or not.
+// Valid validates the specified value is nil or not
 func (v ValidFlag) Valid() bool {
 	return bool(v)
 }
 
-// Error
+// Error returns error message
 func (e ErrInvalidGenericValue) Error() string {
 	buf := bytes.Buffer{}
 	buf.WriteString("invalid value: ")
