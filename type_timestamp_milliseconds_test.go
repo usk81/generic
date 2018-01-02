@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func TestTimestampJsonMarshal(t *testing.T) {
+func TestTimestampMSJsonMarshal(t *testing.T) {
 	v := time.Now()
 	tm := TimestampMS{
 		ValidFlag: true,
@@ -23,7 +23,7 @@ func TestTimestampJsonMarshal(t *testing.T) {
 	}
 }
 
-func TestTimestampJsonMarshalValidFalse(t *testing.T) {
+func TestTimestampMSJsonMarshalValidFalse(t *testing.T) {
 	tm := TimestampMS{
 		ValidFlag: false,
 		time:      time.Now(),

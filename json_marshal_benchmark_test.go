@@ -78,7 +78,7 @@ func BenchmarkMarshalJSONTimestampMS(b *testing.B) {
 func BenchmarkMarshalJSONTimestampNano(b *testing.B) {
 	x := TimestampNano{
 		ValidFlag: true,
-		Time:      time.Now(),
+		time:      time.Now(),
 	}
 	for i := 0; i < b.N; i++ {
 		x.MarshalJSON()
@@ -88,7 +88,7 @@ func BenchmarkMarshalJSONTimestampNano(b *testing.B) {
 func BenchmarkMarshalJSONTimestamp(b *testing.B) {
 	x := Timestamp{
 		ValidFlag: true,
-		Time:      time.Now(),
+		time:      time.Now(),
 	}
 	for i := 0; i < b.N; i++ {
 		x.MarshalJSON()

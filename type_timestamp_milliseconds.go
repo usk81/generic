@@ -13,7 +13,7 @@ type TimestampMS struct {
 	time time.Time
 }
 
-// Value returns Time.Time, but if TimestampMS.ValidFlag is false, returns nil.
+// Value returns timestamp with milliseconds, but if TimestampMS.ValidFlag is false, returns nil.
 func (v TimestampMS) Value() (driver.Value, error) {
 	if !v.Valid() {
 		return nil, nil
