@@ -14,6 +14,22 @@ type TestStringStruct struct {
 	NullValue String `json:"null_value"`
 }
 
+func TestMarshalString(t *testing.T) {
+	expected := String{
+		ValidFlag: true,
+		string:    "foobar",
+	}
+
+	s := "foobar"
+	actual, err := MarshalString(s)
+	if err != nil {
+		t.Errorf("Not Expected error when MarshalString. error:%v", err.Error())
+	}
+	if actual != expected {
+		t.Errorf("actual:%v, expected:%v", actual, expected)
+	}
+}
+
 func TestStringJsonUnmarshalAndMarshal(t *testing.T) {
 	var ts TestStringStruct
 	jstr := `{"int":10,"float":1.1,"bool":false,"string":"qwertyuiopkjhgv876","html":"https://golang.org/src/encoding/json/encode.go?h=float64Encoder&foo=bar#L409","null_value":null}`
