@@ -90,7 +90,7 @@ func TestTimestampNanoSetTime(t *testing.T) {
 		t.Errorf("Not Expected error. error:%s", err.Error())
 	}
 	if tn.Weak() != expected.UnixNano() {
-		t.Errorf("actual:%d, expected:%d", tn.Weak(), expected)
+		t.Errorf("actual:%v, expected:%v", tn.Weak(), expected)
 	}
 }
 

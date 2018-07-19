@@ -11,6 +11,13 @@ type String struct {
 	string string
 }
 
+// MarshalString return generic.String converting of request data
+func MarshalString(x interface{}) (String, error) {
+	v := String{}
+	err := v.Scan(x)
+	return v, err
+}
+
 // Value implements the driver Valuer interface.
 func (v String) Value() (driver.Value, error) {
 	if !v.Valid() {
