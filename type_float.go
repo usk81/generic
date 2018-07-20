@@ -12,6 +12,13 @@ type Float struct {
 	float float64
 }
 
+// MarshalFloat return generic.Float converting of request data
+func MarshalFloat(x interface{}) (Float, error) {
+	v := Float{}
+	err := v.Scan(x)
+	return v, err
+}
+
 // Value implements the driver Valuer interface.
 func (v Float) Value() (driver.Value, error) {
 	if !v.Valid() {
@@ -30,7 +37,7 @@ func (v *Float) Scan(x interface{}) (err error) {
 	return
 }
 
-// Weak returns Bool.Bool, but if Bool.ValidFlag is false, returns nil.
+// Weak returns Float.float, but if Float.ValidFlag is false, returns nil.
 func (v Float) Weak() interface{} {
 	i, _ := v.Value()
 	return i

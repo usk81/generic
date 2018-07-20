@@ -11,6 +11,13 @@ type Time struct {
 	time time.Time
 }
 
+// MarshalTime return generic.Time converting of request data
+func MarshalTime(x interface{}) (Time, error) {
+	v := Time{}
+	err := v.Scan(x)
+	return v, err
+}
+
 // Value implements the driver Valuer interface.
 func (v Time) Value() (driver.Value, error) {
 	if !v.Valid() {

@@ -12,6 +12,13 @@ type Uint struct {
 	uint uint64
 }
 
+// MarshalUint return generic.Uint converting of request data
+func MarshalUint(x interface{}) (Uint, error) {
+	v := Uint{}
+	err := v.Scan(x)
+	return v, err
+}
+
 // Value implements the driver Valuer interface.
 func (v Uint) Value() (driver.Value, error) {
 	if !v.Valid() {

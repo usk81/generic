@@ -7,6 +7,18 @@ import (
 	"time"
 )
 
+func TestMarshalTimestampMS(t *testing.T) {
+	v := time.Now()
+	expected := v.UnixNano() / 1000000
+	ts, err := MarshalTimestampMS(v)
+	if err != nil {
+		t.Errorf("Not Expected error. error:%s", err.Error())
+	}
+	if ts.Weak() != expected {
+		t.Errorf("actual:%[1]v(%[1]T), expected:%[2]v(%[2]T)", ts.Weak(), expected)
+	}
+}
+
 func TestTimestampMSJsonMarshal(t *testing.T) {
 	v := time.Now()
 	tm := TimestampMS{
@@ -63,6 +75,13 @@ func TestTimestampMSJsonUnmarshalNil(t *testing.T) {
 	}
 	if tm.Int64() != 0 {
 		t.Errorf("actual:%d, expected:%d", tm.Int64(), 0)
+	}
+}
+
+func TestTimestampMSJsonUnmarshalInvalid(t *testing.T) {
+	tm := TimestampMS{}
+	if err := tm.UnmarshalJSON([]byte(`"a`)); err == nil {
+		t.Errorf("Expected error when json.Unmarshal, but not; %#v", tm)
 	}
 }
 

@@ -72,6 +72,13 @@ func TestStringUnmarshalNull(t *testing.T) {
 	}
 }
 
+func TestStringJsonUnmarshalInvalid(t *testing.T) {
+	s := String{}
+	if err := s.UnmarshalJSON([]byte(`"a`)); err == nil {
+		t.Errorf("Expected error when json.Unmarshal, but not; %#v", s)
+	}
+}
+
 func TestStringSetNil(t *testing.T) {
 	ts := String{}
 	err := ts.Set(nil)
@@ -106,6 +113,15 @@ func TestStringSetString(t *testing.T) {
 	}
 	if ts.Weak() != expected {
 		t.Errorf("actual:%v, expected:%v", ts.Weak(), expected)
+	}
+}
+
+func TestStringInvalidType(t *testing.T) {
+	v := struct{}{}
+	ts := String{}
+	err := ts.Set(v)
+	if err == nil {
+		t.Errorf("Expected error. actual: %v", ts)
 	}
 }
 

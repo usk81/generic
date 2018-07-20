@@ -12,6 +12,13 @@ type Int struct {
 	int int64
 }
 
+// MarshalInt return generic.Int converting of request data
+func MarshalInt(x interface{}) (Int, error) {
+	v := Int{}
+	err := v.Scan(x)
+	return v, err
+}
+
 // Value implements the driver Valuer interface.
 func (v Int) Value() (driver.Value, error) {
 	if !v.Valid() {

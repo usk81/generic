@@ -13,6 +13,13 @@ type Timestamp struct {
 	time time.Time
 }
 
+// MarshalTimestamp return generic.Timestamp converting of request data
+func MarshalTimestamp(x interface{}) (Timestamp, error) {
+	v := Timestamp{}
+	err := v.Scan(x)
+	return v, err
+}
+
 // Value returns Time.Time, but if Time.ValidFlag is false, returns nil.
 func (v Timestamp) Value() (driver.Value, error) {
 	if !v.Valid() {
