@@ -7,6 +7,18 @@ import (
 	"time"
 )
 
+func TestMarshalTimestampNano(t *testing.T) {
+	v := time.Now()
+	expected := v.UnixNano()
+	ts, err := MarshalTimestampNano(v)
+	if err != nil {
+		t.Errorf("Not Expected error. error:%s", err.Error())
+	}
+	if ts.Weak() != expected {
+		t.Errorf("actual:%[1]v(%[1]T), expected:%[2]v(%[2]T)", ts.Weak(), expected)
+	}
+}
+
 func TestTimestampNanoJsonMarshal(t *testing.T) {
 	v := time.Now()
 	tn := TimestampNano{
@@ -63,6 +75,13 @@ func TestTimestampNanoJsonUnmarshalNil(t *testing.T) {
 	}
 	if tn.Int64() != 0 {
 		t.Errorf("actual:%d, expected:%d", tn.Int64(), 0)
+	}
+}
+
+func TestTimestampNanoJsonUnmarshalInvalid(t *testing.T) {
+	tn := TimestampNano{}
+	if err := tn.UnmarshalJSON([]byte(`"a`)); err == nil {
+		t.Errorf("Expected error when json.Unmarshal, but not; %#v", tn)
 	}
 }
 

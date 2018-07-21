@@ -13,6 +13,22 @@ type TestFloatStruct struct {
 	NullValue Float `json:"null_value"`
 }
 
+func TestMarshalFloat(t *testing.T) {
+	expected := Float{
+		ValidFlag: true,
+		float:     1.01,
+	}
+
+	f := 1.01
+	actual, err := MarshalFloat(f)
+	if err != nil {
+		t.Errorf("Not Expected error when MarshalFloat. error:%s", err.Error())
+	}
+	if actual != expected {
+		t.Errorf("actual:%v, expected:%v", actual, expected)
+	}
+}
+
 func TestFloatJsonUnmarshalAndMarshal(t *testing.T) {
 	var ts TestFloatStruct
 	jstr := `{"int":10,"float":1.0,"bool":true,"string":"50","null_value":null}`
@@ -36,6 +52,13 @@ func TestFloatUnmarshalEmpty(t *testing.T) {
 	err := tf.UnmarshalJSON(nil)
 	if err != nil {
 		t.Errorf("Not Expected error when json.Marshal. error:%s", err.Error())
+	}
+}
+
+func TestFloatJsonUnmarshalInvalid(t *testing.T) {
+	tf := Float{}
+	if err := tf.UnmarshalJSON([]byte(`"0`)); err == nil {
+		t.Errorf("Expected error when json.Unmarshal, but not; %#v", tf)
 	}
 }
 

@@ -13,6 +13,13 @@ type TimestampNano struct {
 	time time.Time
 }
 
+// MarshalTimestampNano return generic.TimestampNano converting of request data
+func MarshalTimestampNano(x interface{}) (TimestampNano, error) {
+	v := TimestampNano{}
+	err := v.Scan(x)
+	return v, err
+}
+
 // Value returns timestamp with nanoseconds, but if TimestampNano.ValidFlag is false, returns nil.
 func (v TimestampNano) Value() (driver.Value, error) {
 	if !v.Valid() {

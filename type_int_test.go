@@ -14,6 +14,22 @@ type TestIntStruct struct {
 	Empty     Int `json:"empty"`
 }
 
+func TestMarshalInt(t *testing.T) {
+	expected := Int{
+		ValidFlag: true,
+		int:       100,
+	}
+
+	i := 100
+	actual, err := MarshalInt(i)
+	if err != nil {
+		t.Errorf("Not Expected error when MarshalInt. error:%v", err.Error())
+	}
+	if actual != expected {
+		t.Errorf("actual:%v, expected:%v", actual, expected)
+	}
+}
+
 func TestIntJsonUnmarshalAndMarshal(t *testing.T) {
 	var ts TestIntStruct
 	jstr := `{"int":10,"float":1.0,"bool":true,"string":"-50","null_value":null}`

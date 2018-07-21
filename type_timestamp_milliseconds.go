@@ -13,6 +13,13 @@ type TimestampMS struct {
 	time time.Time
 }
 
+// MarshalTimestampMS return generic.TimestampMS converting of request data
+func MarshalTimestampMS(x interface{}) (TimestampMS, error) {
+	v := TimestampMS{}
+	err := v.Scan(x)
+	return v, err
+}
+
 // Value returns timestamp with milliseconds, but if TimestampMS.ValidFlag is false, returns nil.
 func (v TimestampMS) Value() (driver.Value, error) {
 	if !v.Valid() {

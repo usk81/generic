@@ -13,6 +13,22 @@ type TestBoolStruct struct {
 	NullValue Bool `json:"null_value"`
 }
 
+func TestMarshalBool(t *testing.T) {
+	expected := Bool{
+		ValidFlag: true,
+		bool:      true,
+	}
+
+	v := true
+	actual, err := MarshalBool(v)
+	if err != nil {
+		t.Errorf("Not Expected error when MarshalBool. error:%s", err.Error())
+	}
+	if actual != expected {
+		t.Errorf("actual:%v, expected:%v", actual, expected)
+	}
+}
+
 func TestBoolJsonUnmarshalAndMarshal(t *testing.T) {
 	var ts TestBoolStruct
 	jstr := `{"int":10,"float":1.1,"bool":false,"string":"1","null_value":null}`
@@ -58,6 +74,13 @@ func TestBoolUnmarshalNil(t *testing.T) {
 	}
 	if actual != expected {
 		t.Errorf("actual:%#v, expected:%#v", actual, expected)
+	}
+}
+
+func TestBoolJsonUnmarshalInvalid(t *testing.T) {
+	tb := Bool{}
+	if err := tb.UnmarshalJSON([]byte(`"true`)); err == nil {
+		t.Errorf("Expected error when json.Unmarshal, but not; %#v", tb)
 	}
 }
 

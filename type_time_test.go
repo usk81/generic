@@ -6,6 +6,18 @@ import (
 	"time"
 )
 
+func TestMarshalTime(t *testing.T) {
+	v := time.Now()
+	expected := v
+	ts, err := MarshalTime(v)
+	if err != nil {
+		t.Errorf("Not Expected error. error:%s", err.Error())
+	}
+	if ts.Weak() != expected {
+		t.Errorf("actual:%v, expected:%v", ts.Weak(), expected)
+	}
+}
+
 func TestTimeJsonMarshal(t *testing.T) {
 	v := time.Now()
 	tt := Time{
@@ -62,6 +74,13 @@ func TestTimeJsonUnmarshalNil(t *testing.T) {
 	}
 	if tt.Time() != time.Unix(0, 0) {
 		t.Errorf("actual:%v, expected:%v", tt.Time(), time.Unix(0, 0))
+	}
+}
+
+func TestTimeJsonUnmarshalInvalid(t *testing.T) {
+	tt := Time{}
+	if err := tt.UnmarshalJSON([]byte(`"a`)); err == nil {
+		t.Errorf("Expected error when json.Unmarshal, but not; %#v", tt)
 	}
 }
 

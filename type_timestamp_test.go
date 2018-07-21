@@ -7,6 +7,18 @@ import (
 	"time"
 )
 
+func TestMarshalTimestamp(t *testing.T) {
+	v := time.Now()
+	expected := v
+	ts, err := MarshalTimestamp(v)
+	if err != nil {
+		t.Errorf("Not Expected error. error:%s", err.Error())
+	}
+	if ts.Weak() != expected {
+		t.Errorf("actual:%v, expected:%v", ts.Weak(), expected)
+	}
+}
+
 func TestTimestampJsonMarshal(t *testing.T) {
 	v := time.Now()
 	ts := Timestamp{
@@ -35,6 +47,41 @@ func TestTimestampJsonMarshalValidFalse(t *testing.T) {
 	}
 	if string(actual) != string(expected) {
 		t.Errorf("actual:%v, expected:%v", actual, expected)
+	}
+}
+
+func TestTimestampJsonUnmarshal(t *testing.T) {
+	v := time.Now()
+	in, _ := v.MarshalJSON()
+	ts := Timestamp{}
+	if err := ts.UnmarshalJSON(in); err != nil {
+		t.Errorf("Not Expected error when json.Unmarshal. error:%v", err.Error())
+	}
+	if !ts.Valid() {
+		t.Error("ValidFlag should be TRUE")
+	}
+	if ts.Int64() != v.Unix() {
+		t.Errorf("actual:%v, expected:%v", ts.Int64(), v)
+	}
+}
+
+func TestTimestampJsonUnmarshalNil(t *testing.T) {
+	ts := Timestamp{}
+	if err := ts.UnmarshalJSON(nil); err != nil {
+		t.Errorf("Not Expected error when json.Unmarshal. error:%v", err.Error())
+	}
+	if ts.Valid() {
+		t.Error("ValidFlag should be FALSE")
+	}
+	if ts.Int64() != 0 {
+		t.Errorf("actual:%v, expected:%v", ts.Int64(), 0)
+	}
+}
+
+func TestTimestampJsonUnmarshalInvalid(t *testing.T) {
+	ts := Timestamp{}
+	if err := ts.UnmarshalJSON([]byte(`"a`)); err == nil {
+		t.Errorf("Expected error when json.Unmarshal, but not; %#v", ts)
 	}
 }
 

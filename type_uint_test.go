@@ -13,6 +13,22 @@ type TestUintStruct struct {
 	NullValue Uint `json:"null_value"`
 }
 
+func TestMarshalUint(t *testing.T) {
+	expected := Uint{
+		ValidFlag: true,
+		uint:      100,
+	}
+
+	i := 100
+	actual, err := MarshalUint(i)
+	if err != nil {
+		t.Errorf("Not Expected error when MarshalUint. error:%v", err.Error())
+	}
+	if actual != expected {
+		t.Errorf("actual:%v, expected:%v", actual, expected)
+	}
+}
+
 func TestUintJsonUnmarshalAndMarshal(t *testing.T) {
 	var ts TestUintStruct
 	jstr := `{"int":10,"float":1.0,"bool":true,"string":"50","null_value":null}`
@@ -28,6 +44,13 @@ func TestUintJsonUnmarshalAndMarshal(t *testing.T) {
 	actual := string(b)
 	if actual != expected {
 		t.Errorf("actual:%s, expected:%s", actual, expected)
+	}
+}
+
+func TestUintJsonUnmarshalInvalid(t *testing.T) {
+	u := Uint{}
+	if err := u.UnmarshalJSON([]byte(`"0`)); err == nil {
+		t.Errorf("Expected error when json.Unmarshal, but not; %#v", u)
 	}
 }
 

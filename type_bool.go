@@ -11,6 +11,13 @@ type Bool struct {
 	bool bool
 }
 
+// MarshalBool return generic.Bool converting of request data
+func MarshalBool(x interface{}) (Bool, error) {
+	v := Bool{}
+	err := v.Scan(x)
+	return v, err
+}
+
 // Value implements the driver Valuer interface.
 func (v Bool) Value() (driver.Value, error) {
 	if !v.Valid() {
