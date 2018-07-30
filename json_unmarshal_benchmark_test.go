@@ -78,6 +78,10 @@ func BenchmarkUnmarshalJSONTimeFromString(b *testing.B) {
 	unmarshalJSONTimeBenchmark(b, []byte(`"`+now.String()+`"`))
 }
 
+func BenchmarkUnmarshalJSONURLFromString(b *testing.B) {
+	unmarshalJSONURLBenchmark(b, []byte(`"https://google.com"`))
+}
+
 func unmarshalJSONBoolBenchmark(b *testing.B, bs []byte) {
 	x := Bool{}
 	for i := 0; i < b.N; i++ {
@@ -115,6 +119,13 @@ func unmarshalJSONTimeBenchmark(b *testing.B, bs []byte) {
 
 func unmarshalJSONUintBenchmark(b *testing.B, bs []byte) {
 	x := Uint{}
+	for i := 0; i < b.N; i++ {
+		x.UnmarshalJSON(bs)
+	}
+}
+
+func unmarshalJSONURLBenchmark(b *testing.B, bs []byte) {
+	x := URL{}
 	for i := 0; i < b.N; i++ {
 		x.UnmarshalJSON(bs)
 	}

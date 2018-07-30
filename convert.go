@@ -1,6 +1,7 @@
 package generic
 
 import (
+	"net/url"
 	"strconv"
 	"strings"
 	"time"
@@ -342,4 +343,18 @@ func asTimestampWithFunc(x interface{}, f func(i int64) time.Time) (result time.
 		return result, false, ErrInvalidGenericValue{Value: x}
 	}
 	return f(i), true, nil
+}
+
+func asURL(x interface{}) (result *url.URL, isValid ValidFlag, err error) {
+	switch x.(type) {
+	case nil:
+		return nil, false, nil
+	case *url.URL:
+		result = x.(*url.URL)
+	case string:
+		result, err = url.Parse(x.(string))
+	default:
+		err = ErrInvalidGenericValue{Value: x}
+	}
+	return result, (err == nil), err
 }
