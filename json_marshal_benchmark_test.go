@@ -1,6 +1,7 @@
 package generic
 
 import (
+	"net/url"
 	"testing"
 	"time"
 )
@@ -99,6 +100,19 @@ func BenchmarkMarshalJSONUint(b *testing.B) {
 	x := Uint{
 		ValidFlag: true,
 		uint:      10000,
+	}
+	for i := 0; i < b.N; i++ {
+		x.MarshalJSON()
+	}
+}
+
+func BenchmarkMarshalJSONURL(b *testing.B) {
+	x := URL{
+		ValidFlag: true,
+		url: &url.URL{
+			Scheme: "https",
+			Host:   "www.google.com",
+		},
 	}
 	for i := 0; i < b.N; i++ {
 		x.MarshalJSON()

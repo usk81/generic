@@ -7,6 +7,8 @@
 
 flexible data type for Go
 
+support: Go 1.8+
+
 ## Install
 
 standard `go get`:
