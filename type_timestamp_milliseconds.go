@@ -13,11 +13,20 @@ type TimestampMS struct {
 	time time.Time
 }
 
-// MarshalTimestampMS return generic.TimestampMS converting of request data
+// MarshalTimestampMS returns generic.TimestampMS converting of request data
 func MarshalTimestampMS(x interface{}) (TimestampMS, error) {
 	v := TimestampMS{}
 	err := v.Scan(x)
 	return v, err
+}
+
+// MustTimestampMS returns generic.TimestampMS converting of request data
+func MustTimestampMS(x interface{}) TimestampMS {
+	v, err := MarshalTimestampMS(x)
+	if err != nil {
+		panic(err)
+	}
+	return v
 }
 
 // Value returns timestamp with milliseconds, but if TimestampMS.ValidFlag is false, returns nil.
