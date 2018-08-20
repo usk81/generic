@@ -18,6 +18,15 @@ func MarshalBool(x interface{}) (Bool, error) {
 	return v, err
 }
 
+// MustBool return generic.Bool converting of request data
+func MustBool(x interface{}) Bool {
+	v, err := MarshalBool(x)
+	if err != nil {
+		panic(err)
+	}
+	return v
+}
+
 // Value implements the driver Valuer interface.
 func (v Bool) Value() (driver.Value, error) {
 	if !v.Valid() {

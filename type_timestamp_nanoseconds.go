@@ -13,11 +13,20 @@ type TimestampNano struct {
 	time time.Time
 }
 
-// MarshalTimestampNano return generic.TimestampNano converting of request data
+// MarshalTimestampNano returns generic.TimestampNano converting of request data
 func MarshalTimestampNano(x interface{}) (TimestampNano, error) {
 	v := TimestampNano{}
 	err := v.Scan(x)
 	return v, err
+}
+
+// MustTimestampNano returns generic.TimestampNano converting of request data
+func MustTimestampNano(x interface{}) TimestampNano {
+	v, err := MarshalTimestampNano(x)
+	if err != nil {
+		panic(err)
+	}
+	return v
 }
 
 // Value returns timestamp with nanoseconds, but if TimestampNano.ValidFlag is false, returns nil.

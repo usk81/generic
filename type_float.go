@@ -19,6 +19,15 @@ func MarshalFloat(x interface{}) (Float, error) {
 	return v, err
 }
 
+// MustFloat return generic.Float converting of request data
+func MustFloat(x interface{}) Float {
+	v, err := MarshalFloat(x)
+	if err != nil {
+		panic(err)
+	}
+	return v
+}
+
 // Value implements the driver Valuer interface.
 func (v Float) Value() (driver.Value, error) {
 	if !v.Valid() {

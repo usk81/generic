@@ -5,6 +5,8 @@ import (
 	"strconv"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestMarshalTimestampNano(t *testing.T) {
@@ -16,6 +18,50 @@ func TestMarshalTimestampNano(t *testing.T) {
 	}
 	if ts.Weak() != expected {
 		t.Errorf("actual:%[1]v(%[1]T), expected:%[2]v(%[2]T)", ts.Weak(), expected)
+	}
+}
+
+func TestMustTimestampNano(t *testing.T) {
+	v := time.Now()
+	tests := []struct {
+		name      string
+		args      interface{}
+		want      TimestampNano
+		wantPanic bool
+	}{
+		{
+			name: "valid",
+			args: v,
+			want: TimestampNano{
+				ValidFlag: true,
+				time:      v,
+			},
+			wantPanic: false,
+		},
+		{
+			name: "panic",
+			args: "valid paramenter",
+			want: TimestampNano{
+				ValidFlag: false,
+			},
+			wantPanic: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if tt.wantPanic {
+				p := assert.Panics(t, func() {
+					MustTimestampNano(tt.args)
+				})
+				if !p {
+					t.Errorf("MustTimestampNano() panic = %v, want panic %v", p, tt.wantPanic)
+				}
+				return
+			}
+			if got := MustTimestampNano(tt.args); got.Weak() != v.UnixNano() {
+				t.Errorf("MustTimestampNano() = %v, want %v", got, tt.want)
+			}
+		})
 	}
 }
 

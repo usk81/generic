@@ -4,6 +4,8 @@ import (
 	"net/url"
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 type testURLStruct struct {
@@ -1091,6 +1093,53 @@ func TestMarshalURL(t *testing.T) {
 			}
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("MarshalURL() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestMustURL(t *testing.T) {
+	v, _ := url.Parse(testURLString)
+
+	expected := URL{
+		ValidFlag: true,
+		url:       v,
+	}
+
+	tests := []struct {
+		name      string
+		args      interface{}
+		want      URL
+		wantPanic bool
+	}{
+		{
+			name:      "valid",
+			args:      testURLString,
+			want:      expected,
+			wantPanic: false,
+		},
+		{
+			name: "valid",
+			args: struct{}{},
+			want: URL{
+				ValidFlag: false,
+			},
+			wantPanic: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if tt.wantPanic {
+				p := assert.Panics(t, func() {
+					MustURL(tt.args)
+				})
+				if !p {
+					t.Errorf("MustURL() panic = %v, want panic %v", p, tt.wantPanic)
+				}
+				return
+			}
+			if got := MustURL(tt.args); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("MustURL() = %v, want %v", got, tt.want)
 			}
 		})
 	}

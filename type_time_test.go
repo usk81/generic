@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestMarshalTime(t *testing.T) {
@@ -15,6 +17,50 @@ func TestMarshalTime(t *testing.T) {
 	}
 	if ts.Weak() != expected {
 		t.Errorf("actual:%v, expected:%v", ts.Weak(), expected)
+	}
+}
+
+func TestMustTime(t *testing.T) {
+	v := time.Now()
+	tests := []struct {
+		name      string
+		args      interface{}
+		want      Time
+		wantPanic bool
+	}{
+		{
+			name: "valid",
+			args: v,
+			want: Time{
+				ValidFlag: true,
+				time:      v,
+			},
+			wantPanic: false,
+		},
+		{
+			name: "panic",
+			args: "valid paramenter",
+			want: Time{
+				ValidFlag: false,
+			},
+			wantPanic: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if tt.wantPanic {
+				p := assert.Panics(t, func() {
+					MustTime(tt.args)
+				})
+				if !p {
+					t.Errorf("MustTime() panic = %v, want panic %v", p, tt.wantPanic)
+				}
+				return
+			}
+			if got := MustTime(tt.args); got.Time() != v {
+				t.Errorf("MustTime() = %v, want %v", got, tt.want)
+			}
+		})
 	}
 }
 
