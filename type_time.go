@@ -18,6 +18,15 @@ func MarshalTime(x interface{}) (Time, error) {
 	return v, err
 }
 
+// MustTime return generic.Time converting of request data
+func MustTime(x interface{}) Time {
+	v, err := MarshalTime(x)
+	if err != nil {
+		panic(err)
+	}
+	return v
+}
+
 // Value implements the driver Valuer interface.
 func (v Time) Value() (driver.Value, error) {
 	if !v.Valid() {

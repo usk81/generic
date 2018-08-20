@@ -2,7 +2,10 @@ package generic
 
 import (
 	"encoding/json"
+	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 type TestUintStruct struct {
@@ -26,6 +29,49 @@ func TestMarshalUint(t *testing.T) {
 	}
 	if actual != expected {
 		t.Errorf("actual:%v, expected:%v", actual, expected)
+	}
+}
+
+func TestMustUint(t *testing.T) {
+	tests := []struct {
+		name      string
+		args      interface{}
+		want      Uint
+		wantPanic bool
+	}{
+		{
+			name: "valid",
+			args: 456,
+			want: Uint{
+				ValidFlag: true,
+				uint:      456,
+			},
+			wantPanic: false,
+		},
+		{
+			name: "panic",
+			args: "valid paramenter",
+			want: Uint{
+				ValidFlag: false,
+			},
+			wantPanic: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if tt.wantPanic {
+				p := assert.Panics(t, func() {
+					MustUint(tt.args)
+				})
+				if !p {
+					t.Errorf("MustUint() panic = %v, want panic %v", p, tt.wantPanic)
+				}
+				return
+			}
+			if got := MustUint(tt.args); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("MustUint() = %v, want %v", got, tt.want)
+			}
+		})
 	}
 }
 

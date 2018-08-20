@@ -2,7 +2,10 @@ package generic
 
 import (
 	"encoding/json"
+	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 type TestStringStruct struct {
@@ -27,6 +30,50 @@ func TestMarshalString(t *testing.T) {
 	}
 	if actual != expected {
 		t.Errorf("actual:%v, expected:%v", actual, expected)
+	}
+}
+
+func TestMustString(t *testing.T) {
+	s := "foobar"
+	tests := []struct {
+		name      string
+		args      interface{}
+		want      String
+		wantPanic bool
+	}{
+		{
+			name: "valid",
+			args: s,
+			want: String{
+				ValidFlag: true,
+				string:    s,
+			},
+			wantPanic: false,
+		},
+		{
+			name: "panic",
+			args: struct{}{},
+			want: String{
+				ValidFlag: false,
+			},
+			wantPanic: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if tt.wantPanic {
+				p := assert.Panics(t, func() {
+					MustString(tt.args)
+				})
+				if !p {
+					t.Errorf("MustString() panic = %v, want panic %v", p, tt.wantPanic)
+				}
+				return
+			}
+			if got := MustString(tt.args); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("MustString() = %v, want %v", got, tt.want)
+			}
+		})
 	}
 }
 

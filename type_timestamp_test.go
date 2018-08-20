@@ -5,6 +5,8 @@ import (
 	"strconv"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestMarshalTimestamp(t *testing.T) {
@@ -16,6 +18,50 @@ func TestMarshalTimestamp(t *testing.T) {
 	}
 	if ts.Weak() != expected {
 		t.Errorf("actual:%v, expected:%v", ts.Weak(), expected)
+	}
+}
+
+func TestMustTimestamp(t *testing.T) {
+	v := time.Now()
+	tests := []struct {
+		name      string
+		args      interface{}
+		want      Timestamp
+		wantPanic bool
+	}{
+		{
+			name: "valid",
+			args: v,
+			want: Timestamp{
+				ValidFlag: true,
+				time:      v,
+			},
+			wantPanic: false,
+		},
+		{
+			name: "panic",
+			args: "valid paramenter",
+			want: Timestamp{
+				ValidFlag: false,
+			},
+			wantPanic: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if tt.wantPanic {
+				p := assert.Panics(t, func() {
+					MustTimestamp(tt.args)
+				})
+				if !p {
+					t.Errorf("MustTimestamp() panic = %v, want panic %v", p, tt.wantPanic)
+				}
+				return
+			}
+			if got := MustTimestamp(tt.args); got.Weak() != v {
+				t.Errorf("MustTimestamp() = %v, want %v", got, tt.want)
+			}
+		})
 	}
 }
 

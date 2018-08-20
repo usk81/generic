@@ -20,6 +20,15 @@ func MarshalTimestamp(x interface{}) (Timestamp, error) {
 	return v, err
 }
 
+// MustTimestamp return generic.Timestamp converting of request data
+func MustTimestamp(x interface{}) Timestamp {
+	v, err := MarshalTimestamp(x)
+	if err != nil {
+		panic(err)
+	}
+	return v
+}
+
 // Value returns Time.Time, but if Time.ValidFlag is false, returns nil.
 func (v Timestamp) Value() (driver.Value, error) {
 	if !v.Valid() {

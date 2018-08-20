@@ -18,6 +18,15 @@ func MarshalString(x interface{}) (String, error) {
 	return v, err
 }
 
+// MustString return generic.String converting of request data
+func MustString(x interface{}) String {
+	v, err := MarshalString(x)
+	if err != nil {
+		panic(err)
+	}
+	return v
+}
+
 // Value implements the driver Valuer interface.
 func (v String) Value() (driver.Value, error) {
 	if !v.Valid() {

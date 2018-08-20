@@ -19,6 +19,15 @@ func MarshalUint(x interface{}) (Uint, error) {
 	return v, err
 }
 
+// MustUint return generic.Uint converting of request data
+func MustUint(x interface{}) Uint {
+	v, err := MarshalUint(x)
+	if err != nil {
+		panic(err)
+	}
+	return v
+}
+
 // Value implements the driver Valuer interface.
 func (v Uint) Value() (driver.Value, error) {
 	if !v.Valid() {

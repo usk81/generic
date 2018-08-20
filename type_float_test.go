@@ -2,7 +2,10 @@ package generic
 
 import (
 	"encoding/json"
+	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 type TestFloatStruct struct {
@@ -26,6 +29,49 @@ func TestMarshalFloat(t *testing.T) {
 	}
 	if actual != expected {
 		t.Errorf("actual:%v, expected:%v", actual, expected)
+	}
+}
+
+func TestMustFloat(t *testing.T) {
+	tests := []struct {
+		name      string
+		args      interface{}
+		want      Float
+		wantPanic bool
+	}{
+		{
+			name: "valid",
+			args: 1.23,
+			want: Float{
+				ValidFlag: true,
+				float:     1.23,
+			},
+			wantPanic: false,
+		},
+		{
+			name: "panic",
+			args: "valid paramenter",
+			want: Float{
+				ValidFlag: false,
+			},
+			wantPanic: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if tt.wantPanic {
+				p := assert.Panics(t, func() {
+					MustFloat(tt.args)
+				})
+				if !p {
+					t.Errorf("MustFloat() panic = %v, want panic %v", p, tt.wantPanic)
+				}
+				return
+			}
+			if got := MustFloat(tt.args); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("MustFloat() = %v, want %v", got, tt.want)
+			}
+		})
 	}
 }
 

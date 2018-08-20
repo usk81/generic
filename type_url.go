@@ -19,6 +19,15 @@ func MarshalURL(x interface{}) (URL, error) {
 	return v, err
 }
 
+// MustURL return generic.URL converting of request data
+func MustURL(x interface{}) URL {
+	u, err := MarshalURL(x)
+	if err != nil {
+		panic(err.Error())
+	}
+	return u
+}
+
 // Value implements the driver Valuer interface.
 func (v URL) Value() (driver.Value, error) {
 	if !v.Valid() || v.url == nil {

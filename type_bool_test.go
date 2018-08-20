@@ -2,7 +2,10 @@ package generic
 
 import (
 	"encoding/json"
+	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 type TestBoolStruct struct {
@@ -26,6 +29,49 @@ func TestMarshalBool(t *testing.T) {
 	}
 	if actual != expected {
 		t.Errorf("actual:%v, expected:%v", actual, expected)
+	}
+}
+
+func TestMustBool(t *testing.T) {
+	tests := []struct {
+		name      string
+		args      interface{}
+		want      Bool
+		wantPanic bool
+	}{
+		{
+			name: "valid",
+			args: true,
+			want: Bool{
+				ValidFlag: true,
+				bool:      true,
+			},
+			wantPanic: false,
+		},
+		{
+			name: "panic",
+			args: "valid paramenter",
+			want: Bool{
+				ValidFlag: false,
+			},
+			wantPanic: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if tt.wantPanic {
+				p := assert.Panics(t, func() {
+					MustBool(tt.args)
+				})
+				if !p {
+					t.Errorf("MustBool() panic = %v, want panic %v", p, tt.wantPanic)
+				}
+				return
+			}
+			if got := MustBool(tt.args); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("MustBool() = %v, want %v", got, tt.want)
+			}
+		})
 	}
 }
 
