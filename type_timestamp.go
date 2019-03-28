@@ -84,6 +84,14 @@ func (v Timestamp) MarshalJSON() ([]byte, error) {
 	return []byte(strconv.FormatInt(v.time.Unix(), 10)), nil
 }
 
+// Time returns value as time.Time
+func (v Timestamp) Time() time.Time {
+	if !v.Valid() {
+		return time.Unix(0, 0)
+	}
+	return v.time
+}
+
 // UnmarshalJSON implements the json.Unmarshaler interface.
 func (v *Timestamp) UnmarshalJSON(data []byte) error {
 	if len(data) == 0 {

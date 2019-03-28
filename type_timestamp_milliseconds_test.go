@@ -2,6 +2,7 @@ package generic
 
 import (
 	"encoding/json"
+	"reflect"
 	"strconv"
 	"testing"
 	"time"
@@ -254,5 +255,47 @@ func TestTimestampMSString(t *testing.T) {
 	}
 	if tm.String() != expected {
 		t.Errorf("This value should return %s. value:%s", expected, tm.String())
+	}
+}
+
+func TestTimestampMS_Time(t *testing.T) {
+	now := time.Now()
+
+	type fields struct {
+		ValidFlag ValidFlag
+		time      time.Time
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		want   time.Time
+	}{
+		{
+			name: "now",
+			fields: fields{
+				ValidFlag: true,
+				time:      now,
+			},
+			want: now,
+		},
+		{
+			name: "invalid",
+			fields: fields{
+				ValidFlag: false,
+				time:      now,
+			},
+			want: time.Unix(0, 0),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			v := TimestampMS{
+				ValidFlag: tt.fields.ValidFlag,
+				time:      tt.fields.time,
+			}
+			if got := v.Time(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("TimestampMS.Time() = %v, want %v", got, tt.want)
+			}
+		})
 	}
 }
