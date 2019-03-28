@@ -76,6 +76,14 @@ func (v TimestampMS) Int64() int64 {
 	return v.time.UnixNano() / 1000000
 }
 
+// Time returns value as time.Time
+func (v TimestampMS) Time() time.Time {
+	if !v.Valid() {
+		return time.Unix(0, 0)
+	}
+	return v.time
+}
+
 // MarshalJSON implements the json.Marshaler interface.
 func (v TimestampMS) MarshalJSON() ([]byte, error) {
 	if !v.Valid() {
