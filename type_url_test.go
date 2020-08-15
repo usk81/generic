@@ -32,7 +32,7 @@ const (
 var (
 	urltests = []testURLResult{
 		// no path
-		testURLResult{
+		{
 			in: "http://www.google.com",
 			uri: URL{
 				ValidFlag: true,
@@ -48,7 +48,7 @@ var (
 			requestURI: rootPath,
 		},
 		// path
-		testURLResult{
+		{
 			in: "http://www.google.com/",
 			uri: URL{
 				ValidFlag: true,
@@ -65,7 +65,7 @@ var (
 			requestURI: rootPath,
 		},
 		// path with hex escaping
-		testURLResult{
+		{
 			in: "http://www.google.com/file%20one%26two",
 			uri: URL{
 				ValidFlag: true,
@@ -83,7 +83,7 @@ var (
 			requestURI: "/file%20one%26two",
 		},
 		// user
-		testURLResult{
+		{
 			in: "ftp://webmaster@www.google.com/",
 			uri: URL{
 				ValidFlag: true,
@@ -101,7 +101,7 @@ var (
 			requestURI: rootPath,
 		},
 		// escape sequence in username
-		testURLResult{
+		{
 			in: "ftp://john%20doe@www.google.com/",
 			uri: URL{
 				ValidFlag: true,
@@ -119,7 +119,7 @@ var (
 			requestURI: rootPath,
 		},
 		// empty query
-		testURLResult{
+		{
 			in: "http://www.google.com/?",
 			uri: URL{
 				ValidFlag: true,
@@ -138,7 +138,7 @@ var (
 		},
 		// query ending in question mark
 		// golang.org/issue/14573
-		testURLResult{
+		{
 			in: "http://www.google.com/?foo=bar?",
 			uri: URL{
 				ValidFlag: true,
@@ -158,7 +158,7 @@ var (
 			requestURI: "/?foo=bar?",
 		},
 		// query
-		testURLResult{
+		{
 			in: "http://www.google.com/?q=go+language",
 			uri: URL{
 				ValidFlag: true,
@@ -178,7 +178,7 @@ var (
 			requestURI: "/?q=go+language",
 		},
 		// query with hex escaping: NOT parsed
-		testURLResult{
+		{
 			in: "http://www.google.com/?q=go%20language",
 			uri: URL{
 				ValidFlag: true,
@@ -198,7 +198,7 @@ var (
 			requestURI: "/?q=go%20language",
 		},
 		// %20 outside query
-		testURLResult{
+		{
 			in: "http://www.google.com/a%20b?q=c+d",
 			uri: URL{
 				ValidFlag: true,
@@ -218,7 +218,7 @@ var (
 			requestURI: "/a%20b?q=c+d",
 		},
 		// path without leading /, so no parsing
-		testURLResult{
+		{
 			in: "http:www.google.com/?q=go+language",
 			uri: URL{
 				ValidFlag: true,
@@ -237,7 +237,7 @@ var (
 			requestURI: "www.google.com/?q=go+language",
 		},
 		// path without leading /, so no parsing
-		testURLResult{
+		{
 			in: "http:%2f%2fwww.google.com/?q=go+language",
 			uri: URL{
 				ValidFlag: true,
@@ -256,7 +256,7 @@ var (
 			requestURI: "%2f%2fwww.google.com/?q=go+language",
 		},
 		// non-authority with path
-		testURLResult{
+		{
 			in: "mailto:/webmaster@golang.org",
 			uri: URL{
 				ValidFlag: true,
@@ -272,7 +272,7 @@ var (
 			requestURI: "/webmaster@golang.org",
 		},
 		// non-authority
-		testURLResult{
+		{
 			in: "mailto:webmaster@golang.org",
 			uri: URL{
 				ValidFlag: true,
@@ -288,7 +288,7 @@ var (
 			requestURI: "webmaster@golang.org",
 		},
 		// unescaped :// in query should not create a scheme
-		testURLResult{
+		{
 			in: "/foo?query=http://bad",
 			uri: URL{
 				ValidFlag: true,
@@ -306,7 +306,7 @@ var (
 			requestURI: "/foo?query=http://bad",
 		},
 		// leading // without scheme should create an authority
-		testURLResult{
+		{
 			in: "//foo",
 			uri: URL{
 				ValidFlag: true,
@@ -321,7 +321,7 @@ var (
 			requestURI: rootPath,
 		},
 		// leading // without scheme, with userinfo, path, and query
-		testURLResult{
+		{
 			in: "//user@foo/path?a=b",
 			uri: URL{
 				ValidFlag: true,
@@ -345,7 +345,7 @@ var (
 		// ServeHTTP -> ReadRequest -> Parse, which is arguably a
 		// different URL parsing context, but currently shares the
 		// same codepath)
-		testURLResult{
+		{
 			in: "///threeslashes",
 			uri: URL{
 				ValidFlag: true,
@@ -359,7 +359,7 @@ var (
 			queries:    url.Values{},
 			requestURI: "///threeslashes",
 		},
-		testURLResult{
+		{
 			in: "http://user:password@google.com",
 			uri: URL{
 				ValidFlag: true,
@@ -376,7 +376,7 @@ var (
 			requestURI: rootPath,
 		},
 		// unescaped @ in username should not confuse host
-		testURLResult{
+		{
 			in: "http://j@ne:password@google.com",
 			uri: URL{
 				ValidFlag: true,
@@ -393,7 +393,7 @@ var (
 			requestURI: rootPath,
 		},
 		// unescaped @ in password should not confuse host
-		testURLResult{
+		{
 			in: "http://jane:p@ssword@google.com",
 			uri: URL{
 				ValidFlag: true,
@@ -409,7 +409,7 @@ var (
 			queries:    url.Values{},
 			requestURI: rootPath,
 		},
-		testURLResult{
+		{
 			in: "http://j@ne:password@google.com/p@th?q=@go",
 			uri: URL{
 				ValidFlag: true,
@@ -429,7 +429,7 @@ var (
 			},
 			requestURI: "/p@th?q=@go",
 		},
-		testURLResult{
+		{
 			in: "http://www.google.com/?q=go+language#foo",
 			uri: URL{
 				ValidFlag: true,
@@ -449,7 +449,7 @@ var (
 			},
 			requestURI: "/?q=go+language",
 		},
-		testURLResult{
+		{
 			in: "http://www.google.com/?q=go+language#foo%26bar",
 			uri: URL{
 				ValidFlag: true,
@@ -469,7 +469,7 @@ var (
 			},
 			requestURI: "/?q=go+language",
 		},
-		testURLResult{
+		{
 			in: "file:///home/adg/rabbits",
 			uri: URL{
 				ValidFlag: true,
@@ -487,7 +487,7 @@ var (
 		},
 		// "Windows" paths are no exception to the rule.
 		// See golang.org/issue/6027, especially comment #9.
-		testURLResult{
+		{
 			in: "file:///C:/FooBar/Baz.txt",
 			uri: URL{
 				ValidFlag: true,
@@ -504,7 +504,7 @@ var (
 			requestURI: "/C:/FooBar/Baz.txt",
 		},
 		// case-insensitive scheme
-		testURLResult{
+		{
 			in: "MaIlTo:webmaster@golang.org",
 			uri: URL{
 				ValidFlag: true,
@@ -520,7 +520,7 @@ var (
 			requestURI: "webmaster@golang.org",
 		},
 		// Relative path
-		testURLResult{
+		{
 			in: "a/b/c",
 			uri: URL{
 				ValidFlag: true,
@@ -535,7 +535,7 @@ var (
 			requestURI: "/a/b/c",
 		},
 		// escaped '?' in username and password
-		testURLResult{
+		{
 			in: "http://%3Fam:pa%3Fsword@google.com",
 			uri: URL{
 				ValidFlag: true,
@@ -552,7 +552,7 @@ var (
 			requestURI: rootPath,
 		},
 		// host subcomponent; IPv4 address in RFC 3986
-		testURLResult{
+		{
 			in: "http://192.168.0.1/",
 			uri: URL{
 				ValidFlag: true,
@@ -569,7 +569,7 @@ var (
 			requestURI: rootPath,
 		},
 		// host and port subcomponents; IPv4 address in RFC 3986
-		testURLResult{
+		{
 			in: "http://192.168.0.1:8080/",
 			uri: URL{
 				ValidFlag: true,
@@ -586,7 +586,7 @@ var (
 			requestURI: rootPath,
 		},
 		// host subcomponent; IPv6 address in RFC 3986
-		testURLResult{
+		{
 			in: "http://[fe80::1]/",
 			uri: URL{
 				ValidFlag: true,
@@ -603,7 +603,7 @@ var (
 			requestURI: rootPath,
 		},
 		// host and port subcomponents; IPv6 address in RFC 3986
-		testURLResult{
+		{
 			in: "http://[fe80::1]:8080/",
 			uri: URL{
 				ValidFlag: true,
@@ -620,7 +620,7 @@ var (
 			requestURI: rootPath,
 		},
 		// host subcomponent; IPv6 address with zone identifier in RFC 6874
-		testURLResult{
+		{
 			in: "http://[fe80::1%25en0]/", // alphanum zone identifier
 			uri: URL{
 				ValidFlag: true,
@@ -637,7 +637,7 @@ var (
 			requestURI: rootPath,
 		},
 		// host and port subcomponents; IPv6 address with zone identifier in RFC 6874
-		testURLResult{
+		{
 			in: "http://[fe80::1%25en0]:8080/", // alphanum zone identifier
 			uri: URL{
 				ValidFlag: true,
@@ -654,7 +654,7 @@ var (
 			requestURI: rootPath,
 		},
 		// host subcomponent; IPv6 address with zone identifier in RFC 6874
-		testURLResult{
+		{
 			in: "http://[fe80::1%25%65%6e%301-._~]/", // percent-encoded+unreserved zone identifier
 			uri: URL{
 				ValidFlag: true,
@@ -671,7 +671,7 @@ var (
 			requestURI: rootPath,
 		},
 		// host and port subcomponents; IPv6 address with zone identifier in RFC 6874
-		testURLResult{
+		{
 			in: "http://[fe80::1%25%65%6e%301-._~]:8080/", // percent-encoded+unreserved zone identifier
 			uri: URL{
 				ValidFlag: true,
@@ -688,7 +688,7 @@ var (
 			requestURI: rootPath,
 		},
 		// alternate escapings of path survive round trip
-		testURLResult{
+		{
 			in: "http://rest.rsc.io/foo%2fbar/baz%2Fquux?alt=media",
 			uri: URL{
 				ValidFlag: true,
@@ -709,7 +709,7 @@ var (
 			requestURI: "/foo%2fbar/baz%2Fquux?alt=media",
 		},
 		// issue 12036
-		testURLResult{
+		{
 			in: "mysql://a,b,c/bar",
 			uri: URL{
 				ValidFlag: true,
@@ -726,24 +726,24 @@ var (
 			requestURI: "/bar",
 		},
 		// worst case host, still round trips
-		testURLResult{
-			in: "scheme://!$&'()*+,;=hello!:port/path",
+		{
+			in: "scheme://!$&'()*+,;=hello!:1/path",
 			uri: URL{
 				ValidFlag: true,
 				url: &url.URL{
 					Scheme: "scheme",
-					Host:   "!$&'()*+,;=hello!:port",
+					Host:   "!$&'()*+,;=hello!:1",
 					Path:   "/path",
 				},
 			},
 			hostname:   "!$&'()*+,;=hello!",
 			abs:        true,
-			port:       "port",
+			port:       "1",
 			queries:    url.Values{},
 			requestURI: "/path",
 		},
 		// worst case path, still round trips
-		testURLResult{
+		{
 			in: "http://host/!$&'()*+,;=:@[hello]",
 			uri: URL{
 				ValidFlag: true,
@@ -761,7 +761,7 @@ var (
 			requestURI: "/!$&'()*+,;=:@[hello]",
 		},
 		// golang.org/issue/5684
-		testURLResult{
+		{
 			in: "http://example.com/oid/[order_id]",
 			uri: URL{
 				ValidFlag: true,
@@ -779,7 +779,7 @@ var (
 			requestURI: "/oid/[order_id]",
 		},
 		// golang.org/issue/12200 (colon with empty port)
-		testURLResult{
+		{
 			in: "http://192.168.0.2:8080/foo",
 			uri: URL{
 				ValidFlag: true,
@@ -795,7 +795,7 @@ var (
 			queries:    url.Values{},
 			requestURI: "/foo",
 		},
-		testURLResult{
+		{
 			in: "http://192.168.0.2:/foo",
 			uri: URL{
 				ValidFlag: true,
@@ -812,7 +812,7 @@ var (
 			requestURI: "/foo",
 		},
 		// Malformed IPv6 but still accepted.
-		testURLResult{
+		{
 			in: "http://2b01:e34:ef40:7730:8e70:5aff:fefe:edac:8080/foo",
 			uri: URL{
 				ValidFlag: true,
@@ -822,14 +822,14 @@ var (
 					Path:   "/foo",
 				},
 			},
-			hostname:   "2b01",
+			hostname:   "2b01:e34:ef40:7730:8e70:5aff:fefe:edac",
 			abs:        true,
-			port:       "e34:ef40:7730:8e70:5aff:fefe:edac:8080",
+			port:       "8080",
 			queries:    url.Values{},
 			requestURI: "/foo",
 		},
 		// Malformed IPv6 but still accepted.
-		testURLResult{
+		{
 			in: "http://2b01:e34:ef40:7730:8e70:5aff:fefe:edac:/foo",
 			uri: URL{
 				ValidFlag: true,
@@ -839,13 +839,13 @@ var (
 					Path:   "/foo",
 				},
 			},
-			hostname:   "2b01",
+			hostname:   "2b01:e34:ef40:7730:8e70:5aff:fefe:edac",
 			abs:        true,
-			port:       "e34:ef40:7730:8e70:5aff:fefe:edac:",
+			port:       "",
 			queries:    url.Values{},
 			requestURI: "/foo",
 		},
-		testURLResult{
+		{
 			in: "http://[2b01:e34:ef40:7730:8e70:5aff:fefe:edac]:8080/foo",
 			uri: URL{
 				ValidFlag: true,
@@ -861,7 +861,7 @@ var (
 			queries:    url.Values{},
 			requestURI: "/foo",
 		},
-		testURLResult{
+		{
 			in: "http://[2b01:e34:ef40:7730:8e70:5aff:fefe:edac]:/foo",
 			uri: URL{
 				ValidFlag: true,
@@ -878,7 +878,7 @@ var (
 			requestURI: "/foo",
 		},
 		// golang.org/issue/7991 and golang.org/issue/12719 (non-ascii %-encoded in host)
-		testURLResult{
+		{
 			in: "http://hello.世界.com/foo",
 			uri: URL{
 				ValidFlag: true,
@@ -894,7 +894,7 @@ var (
 			queries:    url.Values{},
 			requestURI: "/foo",
 		},
-		testURLResult{
+		{
 			in: "http://hello.%e4%b8%96%e7%95%8c.com/foo",
 			uri: URL{
 				ValidFlag: true,
@@ -910,7 +910,7 @@ var (
 			queries:    url.Values{},
 			requestURI: "/foo",
 		},
-		testURLResult{
+		{
 			in: "http://hello.%E4%B8%96%E7%95%8C.com/foo",
 			uri: URL{
 				ValidFlag: true,
@@ -927,7 +927,7 @@ var (
 			requestURI: "/foo",
 		},
 		// golang.org/issue/10433 (path beginning with //)
-		testURLResult{
+		{
 			in: "http://example.com//foo",
 			uri: URL{
 				ValidFlag: true,
@@ -944,7 +944,7 @@ var (
 			requestURI: "//foo",
 		},
 		// test that we can reparse the host names we accept.
-		testURLResult{
+		{
 			in: "myscheme://authority<\"hi\">/foo",
 			uri: URL{
 				ValidFlag: true,
@@ -963,7 +963,7 @@ var (
 		// spaces in hosts are disallowed but escaped spaces in IPv6 scope IDs are grudgingly OK.
 		// This happens on Windows.
 		// golang.org/issue/14002
-		testURLResult{
+		{
 			in: "tcp://[2020::2020:20:2020:2020%25Windows%20Loves%20Spaces]:2020",
 			uri: URL{
 				ValidFlag: true,
@@ -978,7 +978,7 @@ var (
 			queries:    url.Values{},
 			requestURI: rootPath,
 		},
-		testURLResult{
+		{
 			in: "magnet:?xt=urn:btih:c12fe1c06bba254a9dc9f519b335aa7c1367a88a&dn",
 			uri: URL{
 				ValidFlag: true,
@@ -998,7 +998,7 @@ var (
 			},
 			requestURI: "/?xt=urn:btih:c12fe1c06bba254a9dc9f519b335aa7c1367a88a&dn",
 		},
-		testURLResult{
+		{
 			in: "mailto:?subject=hi",
 			uri: URL{
 				ValidFlag: true,
@@ -1019,7 +1019,7 @@ var (
 		},
 	}
 
-	// testURLResult{
+	// {
 	// 			in: "validFlag false",
 	// 			uri: URL{
 	// 				ValidFlag: false,
@@ -1037,7 +1037,7 @@ var (
 	// 			queries:    url.Values{},
 	// 			requestURI: "",
 	// 		},
-	// 		testURLResult{
+	// 		{
 	// 			in: "nil",
 	// 			uri: URL{
 	// 				ValidFlag: true,
