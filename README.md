@@ -14,7 +14,7 @@ support: Go 1.8+
 standard `go get`:
 
 ```
-go get -u github.com/usk81/generic
+go get -u github.com/usk81/generic/v2
 ```
 
 ## Usage
