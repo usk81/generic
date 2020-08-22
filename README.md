@@ -1,13 +1,13 @@
 # Generic
-[![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square)](https://godoc.org/github.com/usk81/generic)
+[![go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/github.com/usk81/generic)
 [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://github.com/usk81/generic/blob/master/LICENSE)
-[![Build Status](http://img.shields.io/travis/usk81/generic.svg?style=flat-square)](https://travis-ci.org/usk81/generic)
-[![Coverage Status](https://img.shields.io/coveralls/usk81/generic.svg?style=flat-square)](https://coveralls.io/github/usk81/generic?branch=master)
+![](https://github.com/usk81/generic/workflows/preliminary%20review/badge.svg)
+[![codecov](https://codecov.io/gh/usk81/generic/branch/master/graph/badge.svg)](https://codecov.io/gh/usk81/generic)
 [![Go Report Card](https://goreportcard.com/badge/github.com/usk81/generic)](https://goreportcard.com/report/github.com/usk81/generic)
 
 flexible data type for Go
 
-support: Go 1.8+
+support: Go 1.12+
 
 ## Install
 
@@ -26,7 +26,7 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/usk81/generic"
+	"github.com/usk81/generic/v2"
 )
 
 type User struct {
