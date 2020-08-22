@@ -1,0 +1,53 @@
+name: preliminary review
+on:
+  pull_request
+
+env:
+  GO111MODULE: on
+  GOPROXY: https://proxy.golang.org
+
+jobs:
+  golangci:
+    name: linter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v2
+        with:
+          # Required: the version of golangci-lint is required and must be specified without patch version: we always use the latest patch version.
+          version: v1.30
+          # Optional: golangci-lint command line arguments.
+          args: --enable=goimports
+  test:
+    name: test
+    strategy:
+      matrix:
+        go-version: [1.12.x, 1.13.x, 1.14.x, 1.15.x]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: Install Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: ${{ matrix.go-version }}
+    - name: Set GOPATH and PATH
+      run: |
+        echo "::set-env name=GOPATH::$(dirname $GITHUB_WORKSPACE)"
+        echo "::add-path::$(dirname $GITHUB_WORKSPACE)/bin"
+      shell: bash
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - uses: actions/cache@v2
+      with:
+        path: ~/go/pkg/mod
+        key: ${{ matrix.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ matrix.os }}-go-
+    - name: Test
+      run: go test --coverprofile=coverage.coverprofile --covermode=atomic ./...
+    - name: Upload coverage to Codecov
+      if: success() && matrix.go-version == '1.14.x' && matrix.os == 'ubuntu-latest'
+      uses: codecov/codecov-action@v1
+      with:
+        fail_ci_if_error: false
