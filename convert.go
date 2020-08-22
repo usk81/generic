@@ -37,42 +37,41 @@ func asBool(x interface{}) (result bool, isValid ValidFlag, err error) {
 
 // asBool converts a specified value to float64 value.
 func asFloat(x interface{}) (result float64, isValid ValidFlag, err error) {
-	switch x.(type) {
+	switch v := x.(type) {
 	case nil:
 		return result, false, nil
 	case int:
-		result = float64(x.(int))
+		result = float64(v)
 	case int8:
-		result = float64(x.(int8))
+		result = float64(v)
 	case int16:
-		result = float64(x.(int16))
+		result = float64(v)
 	case int32:
-		result = float64(x.(int32))
+		result = float64(v)
 	case int64:
-		result = float64(x.(int64))
+		result = float64(v)
 	case uint:
-		result = float64(x.(uint))
+		result = float64(v)
 	case uint8:
-		result = float64(x.(uint8))
+		result = float64(v)
 	case uint16:
-		result = float64(x.(uint16))
+		result = float64(v)
 	case uint32:
-		result = float64(x.(uint32))
+		result = float64(v)
 	case uint64:
-		result = float64(x.(uint64))
+		result = float64(v)
 	case float32:
-		result = float64(x.(float32))
+		result = float64(v)
 	case float64:
-		result = x.(float64)
+		result = v
 	case bool:
-		b := x.(bool)
-		if b {
+		if v {
 			result = 1
 		} else {
 			result = 0
 		}
 	case string:
-		f, err := strconv.ParseFloat(x.(string), 64)
+		f, err := strconv.ParseFloat(v, 64)
 		if err != nil {
 			return result, false, ErrInvalidGenericValue{Value: x}
 		}
@@ -138,11 +137,11 @@ func asString(x interface{}) (result string, isValid ValidFlag, err error) {
 
 // asBool converts a specified value to time.Time value.
 func asTime(x interface{}) (result time.Time, isValid ValidFlag, err error) {
-	switch x.(type) {
+	switch v := x.(type) {
 	case nil:
 		return result, false, nil
 	case time.Time:
-		result = x.(time.Time)
+		result = v
 		if result.IsZero() {
 			return result, true, nil
 		}
@@ -248,13 +247,13 @@ func asTimestampWithFunc(x interface{}, f func(i int64) time.Time) (result time.
 }
 
 func asURL(x interface{}) (result *url.URL, isValid ValidFlag, err error) {
-	switch x.(type) {
+	switch v := x.(type) {
 	case nil:
 		return nil, false, nil
 	case *url.URL:
-		result = x.(*url.URL)
+		result = v
 	case string:
-		result, err = url.Parse(x.(string))
+		result, err = url.Parse(v)
 	default:
 		err = ErrInvalidGenericValue{Value: x}
 	}

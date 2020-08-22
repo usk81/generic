@@ -8,12 +8,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-type testURLStruct struct {
-	URL       URL `json:"url"`
-	PATH      URL `json:"path"`
-	NullValue URL `json:"null_value"`
-}
-
 type testURLResult struct {
 	in         string
 	uri        URL

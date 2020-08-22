@@ -204,7 +204,7 @@ func TestTimeSetBool(t *testing.T) {
 func TestTimeString(t *testing.T) {
 	var expected = time.Now()
 	tt := Time{}
-	tt.Set(expected)
+	tt.Set(expected) // nolint
 	if tt.String() != expected.String() {
 		t.Errorf("actual:%s, expected:%s", tt.String(), expected.String())
 	}

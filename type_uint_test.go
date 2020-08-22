@@ -234,7 +234,7 @@ func TestUintUint64Invalid(t *testing.T) {
 func TestUintString(t *testing.T) {
 	var expected = "123456789"
 	ti := Uint{}
-	ti.Set(expected)
+	ti.Set(expected) // nolint
 	if ti.String() != expected {
 		t.Errorf("actual:%s, expected:%s", ti.String(), expected)
 	}
