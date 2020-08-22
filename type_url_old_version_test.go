@@ -1,4 +1,4 @@
-// +build go1.15
+// +build !go1.15
 
 package generic
 
@@ -450,12 +450,11 @@ var (
 			uri: URL{
 				ValidFlag: true,
 				url: &url.URL{
-					Scheme:      "http",
-					Host:        "www.google.com",
-					Path:        "/",
-					RawQuery:    "q=go+language",
-					Fragment:    "foo&bar",
-					RawFragment: "foo%26bar",
+					Scheme:   "http",
+					Host:     "www.google.com",
+					Path:     "/",
+					RawQuery: "q=go+language",
+					Fragment: "foo&bar",
 				},
 			},
 			hostname: "www.google.com",

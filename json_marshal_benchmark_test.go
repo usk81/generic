@@ -12,7 +12,7 @@ func BenchmarkMarshalJSONBool(b *testing.B) {
 		bool:      true,
 	}
 	for i := 0; i < b.N; i++ {
-		x.MarshalJSON()
+		x.MarshalJSON() // nolint
 	}
 }
 
@@ -22,7 +22,7 @@ func BenchmarkMarshalJSONFloat(b *testing.B) {
 		float:     1000.000001,
 	}
 	for i := 0; i < b.N; i++ {
-		x.MarshalJSON()
+		x.MarshalJSON() // nolint
 	}
 }
 
@@ -32,7 +32,7 @@ func BenchmarkMarshalJSONInt(b *testing.B) {
 		int:       10000,
 	}
 	for i := 0; i < b.N; i++ {
-		x.MarshalJSON()
+		x.MarshalJSON() // nolint
 	}
 }
 
@@ -42,7 +42,7 @@ func BenchmarkMarshalJSONString(b *testing.B) {
 		string:    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
 	}
 	for i := 0; i < b.N; i++ {
-		x.MarshalJSON()
+		x.MarshalJSON() // nolint
 	}
 }
 
@@ -52,7 +52,7 @@ func BenchmarkMarshalJSONStringLarge(b *testing.B) {
 		string:    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 	}
 	for i := 0; i < b.N; i++ {
-		x.MarshalJSON()
+		x.MarshalJSON() // nolint
 	}
 }
 
@@ -62,7 +62,7 @@ func BenchmarkMarshalJSONTime(b *testing.B) {
 		time:      time.Now(),
 	}
 	for i := 0; i < b.N; i++ {
-		x.MarshalJSON()
+		x.MarshalJSON() // nolint
 	}
 }
 
@@ -72,7 +72,7 @@ func BenchmarkMarshalJSONTimestampMS(b *testing.B) {
 		time:      time.Now(),
 	}
 	for i := 0; i < b.N; i++ {
-		x.MarshalJSON()
+		x.MarshalJSON() // nolint
 	}
 }
 
@@ -82,7 +82,7 @@ func BenchmarkMarshalJSONTimestampNano(b *testing.B) {
 		time:      time.Now(),
 	}
 	for i := 0; i < b.N; i++ {
-		x.MarshalJSON()
+		x.MarshalJSON() // nolint
 	}
 }
 
@@ -92,7 +92,7 @@ func BenchmarkMarshalJSONTimestamp(b *testing.B) {
 		time:      time.Now(),
 	}
 	for i := 0; i < b.N; i++ {
-		x.MarshalJSON()
+		x.MarshalJSON() // nolint
 	}
 }
 
@@ -102,7 +102,7 @@ func BenchmarkMarshalJSONUint(b *testing.B) {
 		uint:      10000,
 	}
 	for i := 0; i < b.N; i++ {
-		x.MarshalJSON()
+		x.MarshalJSON() // nolint
 	}
 }
 
@@ -115,6 +115,6 @@ func BenchmarkMarshalJSONURL(b *testing.B) {
 		},
 	}
 	for i := 0; i < b.N; i++ {
-		x.MarshalJSON()
+		x.MarshalJSON() // nolint
 	}
 }

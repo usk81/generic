@@ -222,7 +222,7 @@ func TestFloatFloat64Invalid(t *testing.T) {
 func TestFloatString(t *testing.T) {
 	var expected = "56.0001"
 	tf := Float{}
-	tf.Set(expected)
+	tf.Set(expected) // nolint
 	if tf.String() != expected {
 		t.Errorf("actual:%s, expected:%s", tf.String(), expected)
 	}

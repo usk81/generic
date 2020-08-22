@@ -37,6 +37,22 @@ func BenchmarkUnmarshalJSONIntFromString(b *testing.B) {
 	unmarshalJSONIntBenchmark(b, []byte(`"1.0"`))
 }
 
+func BenchmarkUnmarshalJSONUintFromBool(b *testing.B) {
+	unmarshalJSONUintBenchmark(b, []byte(`true`))
+}
+
+func BenchmarkUnmarshalJSONUintFromFloat(b *testing.B) {
+	unmarshalJSONUintBenchmark(b, []byte(`1.0`))
+}
+
+func BenchmarkUnmarshalJSONUintFromInt(b *testing.B) {
+	unmarshalJSONUintBenchmark(b, []byte(`1`))
+}
+
+func BenchmarkUnmarshalJSONUintFromString(b *testing.B) {
+	unmarshalJSONUintBenchmark(b, []byte(`"1.0"`))
+}
+
 func BenchmarkUnmarshalJSONFloatFromBool(b *testing.B) {
 	unmarshalJSONFloatBenchmark(b, []byte(`true`))
 }
@@ -85,48 +101,48 @@ func BenchmarkUnmarshalJSONURLFromString(b *testing.B) {
 func unmarshalJSONBoolBenchmark(b *testing.B, bs []byte) {
 	x := Bool{}
 	for i := 0; i < b.N; i++ {
-		x.UnmarshalJSON(bs)
+		x.UnmarshalJSON(bs) // nolint
 	}
 }
 
 func unmarshalJSONFloatBenchmark(b *testing.B, bs []byte) {
 	x := Float{}
 	for i := 0; i < b.N; i++ {
-		x.UnmarshalJSON(bs)
+		x.UnmarshalJSON(bs) // nolint
 	}
 }
 
 func unmarshalJSONIntBenchmark(b *testing.B, bs []byte) {
 	x := Int{}
 	for i := 0; i < b.N; i++ {
-		x.UnmarshalJSON(bs)
+		x.UnmarshalJSON(bs) // nolint
 	}
 }
 
 func unmarshalJSONStringBenchmark(b *testing.B, bs []byte) {
 	x := String{}
 	for i := 0; i < b.N; i++ {
-		x.UnmarshalJSON(bs)
+		x.UnmarshalJSON(bs) // nolint
 	}
 }
 
 func unmarshalJSONTimeBenchmark(b *testing.B, bs []byte) {
 	t := Time{}
 	for i := 0; i < b.N; i++ {
-		t.UnmarshalJSON(bs)
+		t.UnmarshalJSON(bs) // nolint
 	}
 }
 
 func unmarshalJSONUintBenchmark(b *testing.B, bs []byte) {
 	x := Uint{}
 	for i := 0; i < b.N; i++ {
-		x.UnmarshalJSON(bs)
+		x.UnmarshalJSON(bs) // nolint
 	}
 }
 
 func unmarshalJSONURLBenchmark(b *testing.B, bs []byte) {
 	x := URL{}
 	for i := 0; i < b.N; i++ {
-		x.UnmarshalJSON(bs)
+		x.UnmarshalJSON(bs) // nolint
 	}
 }
